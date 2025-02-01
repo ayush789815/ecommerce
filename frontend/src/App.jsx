@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import { Home } from 'lucide-react';
+import Home  from './pages/Home';
 function App() {
   return (
     <BrowserRouter>
