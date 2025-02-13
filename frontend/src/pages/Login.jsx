@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import LoginImage from '../assets/Tablet login-pana.png'; 
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -12,12 +13,15 @@ function Login() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
     const response = await axios.post(`${import.meta.env.VITE_URL}/auth/login`,formData )
+    // localStorage.setItem('userId', response.data.userId);
     console.log(response);
     
     if (response.status === 200) {
       const data = response.data;
+      console.log(data.token,data.userId,"from line no 11")
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId);
       navigate('/home')
     }
   };
@@ -28,7 +32,7 @@ function Login() {
       <div className="lg:w-1/2 relative bg-[#e8f4f4] p-8 flex items-center justify-center">
         <div className="max-w-md">
           <img 
-            src="https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            src={LoginImage} // Using the imported image
             alt="Shopping Online"
             className="rounded-lg shadow-xl"
           />

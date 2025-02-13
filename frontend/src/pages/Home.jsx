@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../component/Header/Header'
 import FlashSale from '../component/sections/FlashSale'
 import Categories from '../component/sections/Categories'
@@ -7,55 +7,24 @@ import MusicBanner from '../component/sections/MusicBanner'
 import NewArrivals from '../component/sections/NewArrivals'
 import Services from '../component/sections/Services'
 import Footer from '../component/Footer'
+import axios from 'axios'
 
-export default function HomePage() {
-  const [flashSaleTime] = useState({
-    hours: 3,
-    minutes: 23,
-    seconds: 19
-  })
+export default function HomePage () {
+ 
+  const [product, setProduct] = useState([])
 
-  const flashSaleProducts = [
-    {
-      id: 1,
-      name: 'HAVIT HV-G92 Gamepad',
-      price: 120,
-      originalPrice: 160,
-      rating: 4.5,
-      reviews: 88,
-      discount: '-35%',
-      image: 'https://via.placeholder.com/200x200'
-    },
-    {
-      id: 2,
-      name: 'AK-900 Wired Keyboard',
-      price: 200,
-      originalPrice: 250,
-      rating: 4.7,
-      reviews: 75,
-      discount: '-25%',
-      image: 'https://via.placeholder.com/200x200'
-    },
-    {
-      id: 3,
-      name: 'IPS LCD Gaming Monitor',
-      price: 370,
-      originalPrice: 400,
-      rating: 4.8,
-      reviews: 99,
-      discount: '-30%',
-      image: 'https://via.placeholder.com/200x200'
-    },
-    {
-      id: 4,
-      name: 'RGB liquid CPU Cooler',
-      price: 160,
-      originalPrice: 170,
-      rating: 4.6,
-      reviews: 65,
-      image: 'https://via.placeholder.com/200x200'
+ 
+ useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_URL}/getProduct`)
+      setProduct(response.data.products)  
+    } catch (error) {
+      console.error("Error fetching products:", error)
     }
-  ]
+  }
+  fetchProducts()
+}, []) 
 
   const categories = [
     { id: 1, name: 'Phones', icon: '📱' },
@@ -74,7 +43,7 @@ export default function HomePage() {
       originalPrice: 360,
       rating: 5,
       reviews: 65,
-      image: 'https://via.placeholder.com/200x200'
+      image: 'https://images.unsplash.com/photo-1602081918793-f518aee5ff8c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fG5vcnRoJTIwY29hdHxlbnwwfHwwfHx8MA%3D%3D'
     },
     {
       id: 2,
@@ -83,7 +52,7 @@ export default function HomePage() {
       originalPrice: 1160,
       rating: 4.5,
       reviews: 65,
-      image: 'https://via.placeholder.com/200x200'
+      image: 'https://images.unsplash.com/photo-1473188588951-666fce8e7c68?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8R3VjY2klMjBkdWZmbGUlMjBiYWd8ZW58MHx8MHx8fDA%3D'
     },
     {
       id: 3,
@@ -92,7 +61,7 @@ export default function HomePage() {
       originalPrice: 170,
       rating: 4.5,
       reviews: 65,
-      image: 'https://via.placeholder.com/200x200'
+      image: 'https://images.unsplash.com/photo-1473187983305-f615310e7daa?w=200&dpr=1&crop=entropy&auto=format&fit=crop&q=60&ixlib=rb-4.0.3'
     },
     {
       id: 4,
@@ -100,7 +69,7 @@ export default function HomePage() {
       price: 360,
       rating: 4.5,
       reviews: 65,
-      image: 'https://via.placeholder.com/200x200'
+      image: 'https://images.unsplash.com/photo-1614350048512-98ef79f6f829?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFNtYWxsJTIwQm9va1NoZWxmfGVufDB8fDB8fHww'
     }
   ]
 
@@ -108,7 +77,7 @@ export default function HomePage() {
     <div>
       <Header />
       <main className="max-w-7xl mx-auto px-4">
-        <FlashSale products={flashSaleProducts} time={flashSaleTime} />
+        <FlashSale products={product}  />
         <Categories categories={categories} />
         <BestSelling products={bestSelling} />
         <MusicBanner />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import RegisterImage from "../assets/Sign up-pana.png"
 function SignUp() {
   const [formData, setFormData] = useState({
     name: '',
@@ -44,7 +45,7 @@ function SignUp() {
       <div className="lg:w-1/2 relative bg-[#e8f4f4] p-8 flex items-center justify-center">
         <div className="max-w-md">
           <img 
-            src="https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80"
+            src={RegisterImage}
             alt="Shopping Cart with Mobile Phone"
             className="rounded-lg shadow-xl"
           />

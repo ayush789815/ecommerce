@@ -1,8 +1,11 @@
-export default function AnnouncementBar() {
+import React from 'react'
+
+function AnnouncementBar() {
   return (
-    <div className="bg-secondary text-white text-center py-3 text-sm">
-      Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-      <a href="#shop" className="ml-2 hover:underline">ShopNow</a>
-    </div>
+    <div className="bg-black text-white text-center py-2 text-sm">
+        <p>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%! <span className="font-semibold">ShopNow</span></p>
+      </div>
   )
 }
+
+export default AnnouncementBar
