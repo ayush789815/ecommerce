@@ -42,7 +42,6 @@ export default function ProductCard({ product }) {
         data: { userId, productId }
       });
       console.log("Product Removed from Wishlist:", response.data);
-      getWishlist(userId); // Refresh the wishlist
       setIsInWishlist(false);
 
     } catch (error) {

@@ -8,8 +8,8 @@ export default function MainHeader() {
 
       <nav className="flex gap-8">
         <Link className='text-black' to={'/home'}>Home</Link>
-        <a href="#contact" className="hover:text-primary">Contact</a>
-        <a href="#about" className="hover:text-primary">About</a>
+        <Link className="hover:text-primary" to={"/contact"}> Contact</Link>
+        <Link className="hover:text-primary" to={"/about"}> About</Link>
         <Link className='text-black' to={'/'}>Sign Up</Link>
         <Link className='text-black' to={'/addproduct'}> Add Product</Link>
       </nav>

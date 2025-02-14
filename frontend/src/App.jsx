@@ -7,6 +7,8 @@ import AddProduct from './pages/AddProduct';
 import ProductPage from './pages/ProductPage';
 import AddToCart from './pages/AddToCart'
 import Wishlist from './pages/Wishlist';
+import ContactPage from './pages/ContactPage';
+import AboutPage  from './pages/AboutPage';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +20,8 @@ function App() {
         <Route path='/product/:productId' element={<ProductPage />} />
         <Route path='/addToCart' element={<AddToCart />}/>
         <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/contact' element={<ContactPage />} />
+        <Route path='/about' element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   );
