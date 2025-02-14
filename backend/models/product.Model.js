@@ -28,6 +28,9 @@ const  productSchema = new mongoose.Schema({
     },
     category:{
         type:String
+    },
+    addwishlist:{
+        type:Boolean
     }
 })
 module.exports = mongoose.model('Product',productSchema)

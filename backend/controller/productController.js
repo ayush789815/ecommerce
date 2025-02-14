@@ -1,7 +1,7 @@
 const productModel = require('../models/product.Model');
 const Cart = require('../models/cart.Model');
 exports.createProduct = async (req, res) => {
-    const { productName, image, price, rating, discount, originalPrice, reviews, category } = req.body;
+    const { productName, image, price, rating, discount, originalPrice, reviews, category ,addwishlist} = req.body;
     try {
         const newProduct = await productModel.create({
             productName,
@@ -11,7 +11,8 @@ exports.createProduct = async (req, res) => {
             discount,
             originalPrice,
             reviews,
-            category
+            category,
+            addwishlist
         })
         res.status(201).json({ product: newProduct, message: 'Product created successfully' });
     } catch (error) {
@@ -48,7 +49,7 @@ exports.getCart = async (req, res) => {
         const { userId } = req.params; // Extract userId from req.params
 
         const cart = await Cart.findOne({ userId })
-            .populate("products.productId", "productName price image");
+            .populate("products.productId", "productName price image addwishlist");
 
         if (!cart) {
             return res.status(404).json({ message: "Cart not found" });

@@ -3,7 +3,7 @@ import AddProduct from '../../pages/AddProduct'
 import { Link } from 'react-router-dom'
 export default function MainHeader() {
   return (
-    <div className="flex justify-between items-center px-8 py-4">
+    <div className="flex justify-between items-center px-8 py-4 border-b border-b-gray-500 ">
       <div className="text-2xl font-bold">Exclusive</div>
 
       <nav className="flex gap-8">
@@ -24,8 +24,8 @@ export default function MainHeader() {
         </div>
 
         <div className="flex gap-6 text-xl">
-          <FiHeart className="cursor-pointer hover:text-primary" />
-        <Link to={'/addToCart'}>  <FiShoppingCart className="cursor-pointer hover:text-primary" /></Link>
+          <Link to={'/wishlist'}><FiHeart className="cursor-pointer hover:text-primary" /></Link>
+          <Link to={'/addToCart'}>  <FiShoppingCart className="cursor-pointer hover:text-primary" /></Link>
           <FiUser className="cursor-pointer hover:text-primary" />
         </div>
       </div>
