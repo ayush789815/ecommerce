@@ -27,10 +27,10 @@ export default function HomePage () {
 }, []) 
 
   const categories = [
-    { id: 1, name: 'Phones', icon: '📱' },
-    { id: 2, name: 'Computers', icon: '💻' },
-    { id: 3, name: 'SmartWatch', icon: '⌚' },
-    { id: 4, name: 'Camera', icon: '📸' },
+    { id: 1, name: 'mobile', icon: '📱' },
+    { id: 2, name: 'computer', icon: '💻' },
+    { id: 3, name: 'smart watch', icon: '⌚' },
+    { id: 4, name: 'laptop', icon: '💻' },
     { id: 5, name: 'HeadPhones', icon: '🎧' },
     { id: 6, name: 'Gaming', icon: '🎮' }
   ]

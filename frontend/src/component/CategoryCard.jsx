@@ -1,8 +1,18 @@
-export default function CategoryCard({ category }) {
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const CategoryCard = ({ category }) => {
+
   return (
-    <div className="flex flex-col items-center p-6 border rounded-lg hover:bg-gray-light transition-colors cursor-pointer">
-      <span className="text-4xl mb-2">{category.icon}</span>
-      <span>{category.name}</span>
-    </div>
-  )
-}
+    <Link to={`/category/${category.name}`}>
+      <div className="border rounded-lg p-4 text-center">
+        <div className="w-full h-32 flex items-center justify-center mb-2">
+          <span className="text-6xl">{category.icon}</span>
+        </div>
+        <h3 className="text-lg font-semibold">{category.name}</h3>
+      </div>
+    </Link>
+  );
+};
+
+export default CategoryCard;

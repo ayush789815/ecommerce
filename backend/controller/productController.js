@@ -38,7 +38,7 @@ exports.getProductById = async (req, res) => {
             return res.status(404).json({ message: "Product not found" })
         }
         res.status(200).json({ product })
-        console.log(product)
+        // console.log(product)
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Server Error" })
@@ -126,5 +126,18 @@ exports.removeFromCart = async (req, res) => {
         res.status(200).json({ message: "Product removed from cart", cart });
     } catch (error) {
         res.status(500).json({ message: "Server Error", error });
+    }
+};
+exports.getProductsByCategory = async (req, res) => {
+    const { category } = req.params;
+    console.log('Category:', category); // Debugging log
+    try {
+        const products = await productModel.find({ category });
+        console.log('Products Found:', products); // Debugging log
+
+        res.status(200).json({ products });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };

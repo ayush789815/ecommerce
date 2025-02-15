@@ -27,7 +27,8 @@ const  productSchema = new mongoose.Schema({
         type:String
     },
     category:{
-        type:String
+        type:String,
+        required: true 
     },
     addwishlist:{
         type:Boolean

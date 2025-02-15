@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
-import AnnouncementBar from '../component/Header/AnnouncementBar';
 import axios from 'axios';
 
 function Wishlist() {

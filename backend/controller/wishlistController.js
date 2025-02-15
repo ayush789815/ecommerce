@@ -8,7 +8,6 @@ exports.getWishlist = async (req, res) => {
 
         const wishlist = await Wishlist.findOne({ userId })
             .populate("products.productId", "productName price image addwishlist");
-
         if (!wishlist) {
             return res.status(404).json({ message: "Wishlist not found" });
         }
