@@ -15,11 +15,11 @@ function Login() {
     e.preventDefault();
     const response = await axios.post(`${import.meta.env.VITE_URL}/auth/login`,formData )
     // localStorage.setItem('userId', response.data.userId);
-    console.log(response);
+    // console.log(response);
     
     if (response.status === 200) {
       const data = response.data;
-      console.log(data.token,data.userId,"from line no 11")
+      // console.log(data.token,data.userId,"from line no 11")
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
       navigate('/home')

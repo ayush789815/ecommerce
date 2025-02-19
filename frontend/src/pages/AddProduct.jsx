@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Calendar, ChevronDown, ChevronUp, Upload } from 'lucide-react';
+import { addProduct } from "../axios/axios";
 
 const initialProduct = {
-  tag: '',
   productName: '',
-  productType: '',
-  productMerk: '',
+  category: '',
   price: '',
   discount: '',
-  discountPrice: '',
+  originalPrice: '',
   description: '',
-  expirationDate: '',
-  image: null
+  image: [], // Retain the name as image
+  rating: '',
+  reviews: ''
 };
 
 export default function AddProduct() {
@@ -35,12 +35,12 @@ export default function AddProduct() {
     if (name === 'price' || name === 'discount') {
       const price = name === 'price' ? parseFloat(value) : parseFloat(product.price);
       const discount = name === 'discount' ? parseFloat(value) : parseFloat(product.discount);
-      
+
       if (!isNaN(price) && !isNaN(discount)) {
-        const discountPrice = price - (price * (discount / 100));
+        const originalPrice = price - (price * (discount / 100));
         setProduct(prev => ({
           ...prev,
-          discountPrice: discountPrice.toFixed(2)
+          originalPrice: originalPrice.toFixed(2)
         }));
       }
     }
@@ -54,23 +54,43 @@ export default function AddProduct() {
   };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const files = Array.from(e.target.files);
+    const newImages = files.map(file => {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setProduct(prev => ({
-          ...prev,
-          image: reader.result
-        }));
-      };
       reader.readAsDataURL(file);
-    }
+      return new Promise((resolve) => {
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+      });
+    });
+
+    Promise.all(newImages).then(images => {
+      setProduct(prev => ({
+        ...prev,
+        image: [...prev.image, ...images]
+      }));
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleRemoveImage = (index) => {
+    setProduct(prev => ({
+      ...prev,
+      image: prev.image.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Product data:', product);
-    // Add your submit logic here
+    try {
+      const response = await addProduct(product);
+      console.log('Product added successfully:', response);
+      alert('Product added successfully');
+      setProduct(initialProduct); // Reset the form
+    } catch (error) {
+      console.error('Error adding product:', error);
+      alert('Failed to add product');
+    }
   };
 
   return (
@@ -81,7 +101,7 @@ export default function AddProduct() {
           <div className="flex justify-between items-center mb-8">
             <div className="flex-1">
               <div className="h-1 bg-gray-200 rounded-full">
-                <div 
+                <div
                   className="h-1 bg-blue-600 rounded-full transition-all duration-300"
                   style={{ width: `${(currentStep / totalSteps) * 100}%` }}
                 ></div>
@@ -96,43 +116,27 @@ export default function AddProduct() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Column - Product Image */}
             <div>
-              <h2 className="text-lg font-medium mb-4">Product Image</h2>
+              <h2 className="text-lg font-medium mb-4">Product Images</h2>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm text-gray-600 mb-1">Tag</label>
-                  <input
-                    type="text"
-                    name="tag"
-                    value={product.tag}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Type and enter"
-                  />
-                </div>
-
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-                  {product.image ? (
-                    <div className="relative">
-                      <img
-                        src={product.image}
-                        alt="Product"
-                        className="w-full h-64 object-contain rounded-lg"
-                      />
-                      <div className="absolute top-2 right-2 space-y-2">
-                        <label 
-                          htmlFor="imageUpload"
-                          className="block bg-white px-4 py-2 rounded-lg shadow text-sm cursor-pointer hover:bg-gray-50"
-                        >
-                          Replace
-                        </label>
-                        <button 
-                          type="button"
-                          className="w-full bg-white px-4 py-2 rounded-lg shadow text-sm text-red-500 hover:bg-red-50"
-                          onClick={() => setProduct(prev => ({ ...prev, image: null }))}
-                        >
-                          Remove
-                        </button>
-                      </div>
+                  {product.image.length > 0 ? (
+                    <div className="grid grid-cols-2 gap-4">
+                      {product.image.map((image, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={image}
+                            alt={`Product ${index + 1}`}
+                            className="w-full h-64 object-contain rounded-lg"
+                          />
+                          <button
+                            type="button"
+                            className="absolute top-2 right-2 bg-white p-2 rounded-full shadow text-red-500 hover:bg-red-50"
+                            onClick={() => handleRemoveImage(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   ) : (
                     <div className="text-center py-12">
@@ -141,6 +145,7 @@ export default function AddProduct() {
                         id="imageUpload"
                         className="hidden"
                         accept="image/*"
+                        multiple
                         onChange={handleImageUpload}
                       />
                       <label
@@ -150,7 +155,7 @@ export default function AddProduct() {
                         <div className="p-3 bg-blue-50 rounded-full">
                           <Upload className="w-6 h-6 text-blue-600" />
                         </div>
-                        <span className="text-blue-600 hover:text-blue-700">Add Product Image</span>
+                        <span className="text-blue-600 hover:text-blue-700">Add Product Images</span>
                         <span className="text-sm text-gray-500">or drag and drop</span>
                       </label>
                     </div>
@@ -177,10 +182,10 @@ export default function AddProduct() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-600 mb-1">Product Type</label>
+                    <label className="block text-sm text-gray-600 mb-1">Category</label>
                     <select
-                      name="productType"
-                      value={product.productType}
+                      name="category"
+                      value={product.category}
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >
@@ -192,27 +197,11 @@ export default function AddProduct() {
                       <option value="mask">Face Mask</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="block text-sm text-gray-600 mb-1">Product Brand</label>
-                    <select
-                      name="productMerk"
-                      value={product.productMerk}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      <option value="">Select brand</option>
-                      <option value="scarlett">Scarlett Whitening</option>
-                      <option value="wardah">Wardah</option>
-                      <option value="skii">SK-II</option>
-                      <option value="loreal">L'Oreal</option>
-                      <option value="nivea">Nivea</option>
-                    </select>
-                  </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-600 mb-1">Price</label>
+                    <label className="block text-sm text-gray-600 mb-1">Original Price</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                       <input
@@ -250,7 +239,7 @@ export default function AddProduct() {
                       <input
                         type="text"
                         name="discountPrice"
-                        value={product.discountPrice}
+                        value={product.originalPrice}
                         readOnly
                         className="w-full pl-8 pr-4 py-2 bg-gray-50 border border-gray-300 rounded-lg"
                         placeholder="0.00"
@@ -272,20 +261,6 @@ export default function AddProduct() {
                   />
                   <div className="text-right text-sm text-gray-500">
                     {product.description.length}/500
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-600 mb-1">Expiration Date</label>
-                  <div className="relative">
-                    <input
-                      type="date"
-                      name="expirationDate"
-                      value={product.expirationDate}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -332,96 +307,6 @@ export default function AddProduct() {
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter SKU"
                       />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Instructions and Material */}
-            <div className="border border-gray-200 rounded-lg">
-              <button
-                type="button"
-                onClick={() => toggleSection('instructions')}
-                className="w-full px-6 py-4 flex items-center justify-between"
-              >
-                <div className="flex items-center">
-                  <span className="text-lg font-medium">Instructions and Material</span>
-                  <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                    1/2
-                  </span>
-                </div>
-                {expandedSections.instructions ? (
-                  <ChevronUp className="w-5 h-5 text-gray-400" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-              {expandedSections.instructions && (
-                <div className="px-6 py-4 border-t border-gray-200">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm text-gray-600 mb-1">Usage Instructions</label>
-                      <textarea
-                        rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter usage instructions"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-600 mb-1">Ingredients</label>
-                      <textarea
-                        rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter product ingredients"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Label and Certificate */}
-            <div className="border border-gray-200 rounded-lg">
-              <button
-                type="button"
-                onClick={() => toggleSection('certificate')}
-                className="w-full px-6 py-4 flex items-center justify-between"
-              >
-                <div className="flex items-center">
-                  <span className="text-lg font-medium">Label and Certificate</span>
-                  <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full">
-                    1/2
-                  </span>
-                </div>
-                {expandedSections.certificate ? (
-                  <ChevronUp className="w-5 h-5 text-gray-400" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-              {expandedSections.certificate && (
-                <div className="px-6 py-4 border-t border-gray-200">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm text-gray-600 mb-1">Certifications</label>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                          <input
-                            type="file"
-                            id="certUpload"
-                            className="hidden"
-                            accept=".pdf,.doc,.docx"
-                          />
-                          <label
-                            htmlFor="certUpload"
-                            className="cursor-pointer inline-flex flex-col items-center space-y-2"
-                          >
-                            <Upload className="w-6 h-6 text-gray-400" />
-                            <span className="text-sm text-gray-600">Upload Certificate</span>
-                          </label>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
