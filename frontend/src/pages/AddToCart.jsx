@@ -3,6 +3,7 @@ import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import AnnouncementBar from '../component/Header/AnnouncementBar';
 import axios from "axios"
+import { Link } from 'react-router-dom';
 function AddToCart() {
     const [quantities, setQuantities] = useState({ monitor: 1, gamepad: 2 });
     const [cart, setCart] = useState(null);
@@ -118,9 +119,7 @@ function AddToCart() {
                         </div>
 
                         <div className="mt-6 flex justify-between">
-                            <button className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50">
-                                Return To Shop
-                            </button>
+                            <Link to={'/home'} className='px-6 py-2 border border-gray-300 rounded hover:bg-gray-50'>Return To Shop</Link>
                             <button className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50">
                                 Update Cart
                             </button>
