@@ -3,6 +3,7 @@ import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ProductCard({ product }) {
   const userId = localStorage.getItem('userId'); // Get userId from local storage
@@ -16,6 +17,7 @@ export default function ProductCard({ product }) {
         const productExists = wishlist.products.some(p => p.productId._id === product._id);
         setIsInWishlist(productExists);
       } catch (error) {
+        console.log(error);
         console.error("Error fetching wishlist:", error);
       }
     };
@@ -31,8 +33,10 @@ export default function ProductCard({ product }) {
       });
       console.log("Product Added to Wishlist:", response.data);
       setIsInWishlist(true);
+      toast.success('Product added to wishlist');
     } catch (error) {
       console.error("Error adding product to wishlist:", error);
+      toast.error('Error adding product to wishlist');
     }
   };
 
@@ -43,11 +47,13 @@ export default function ProductCard({ product }) {
       });
       console.log("Product Removed from Wishlist:", response.data);
       setIsInWishlist(false);
-
+      toast.success('Product removed from wishlist');
     } catch (error) {
       console.error("Error removing product from wishlist:", error);
+      toast.error('Error removing product from wishlist');
     }
   };
+
   return (
     <div className="relative border rounded-lg p-4 group">
       <div className="relative mb-4">

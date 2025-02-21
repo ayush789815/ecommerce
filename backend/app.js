@@ -7,8 +7,10 @@ const app = express();
 const authRoute = require('./routes/authRoute');
 const productRoute = require('./routes/productRoute');
 const wishlistRoute = require('./routes/wishlistRoute')
-app.use(express.json());
 app.use(cors());
+app.use(express.json({ limit: '50mb' })); // Increase JSON body size limit
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Increase URL encoded body limit
+
 connectDB()
 
 

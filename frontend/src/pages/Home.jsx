@@ -27,10 +27,10 @@ export default function HomePage () {
 }, []) 
 
   const categories = [
-    { id: 1, name: 'mobile', icon: '📱' },
-    { id: 2, name: 'computer', icon: '💻' },
-    { id: 3, name: 'smart watch', icon: '⌚' },
-    { id: 4, name: 'laptop', icon: '💻' },
+    { id: 1, name: 'Mobile', icon: '📱' },
+    { id: 2, name: 'Computer', icon: '💻' },
+    { id: 3, name: 'Smart Watch', icon: '⌚' },
+    { id: 4, name: 'Laptop', icon: '💻' },
     { id: 5, name: 'HeadPhones', icon: '🎧' },
     { id: 6, name: 'Gaming', icon: '🎮' }
   ]
@@ -76,11 +76,11 @@ export default function HomePage () {
   return (
     <div>
       <Header />
-      <main className="max-w-7xl mx-auto px-4">
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <MusicBanner />
         <FlashSale products={product}  />
         <Categories categories={categories} />
         <BestSelling products={bestSelling} />
-        <MusicBanner />
         <NewArrivals />
         <Services />
       </main>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
+<<<<<<< HEAD
 import AnnouncementBar from '../component/Header/AnnouncementBar';
 import axios from "axios"
 import { Link } from 'react-router-dom';
@@ -8,25 +9,33 @@ function AddToCart() {
     const [quantities, setQuantities] = useState({ monitor: 1, gamepad: 2 });
     const [cart, setCart] = useState(null);
     const userId = localStorage.getItem('userId')
+=======
+import axios from "axios";
+>>>>>>> 0b708a8fae923f6acca72f69a21d1a973d8c9a6e
 
+function AddToCart() {
+    const [quantities, setQuantities] = useState({});
+    const [cart, setCart] = useState(null);
+    const userId = localStorage.getItem('userId');
 
     const getCart = async (userId) => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_URL}/getCart/${userId}`);
-            const data = response.data
-            setCart(data)
-            // console.log(response ,"from axios")
-            // return response.data;
+            const data = response.data;
+            setCart(data);
         } catch (error) {
             console.error('Error fetching cart:', error);
+            toast.error('Error fetching cart');
+
             throw error;
         }
     };
+
     useEffect(() => {
         if (userId) {
-            getCart(userId)
+            getCart(userId);
         }
-    }, [userId])
+    }, [userId]);
 
     const updateQuantity = async (productId, value) => {
         const newQuantity = Math.max(0, value);
@@ -42,31 +51,40 @@ function AddToCart() {
                 quantity: newQuantity
             });
             console.log("Cart Updated:", response.data);
-            getCart(userId); // Cart ko refresh karne ke liye
+            toast.success('Cart updated successfully');
+            getCart(userId); // Refresh the cart
         } catch (error) {
             console.error("Error updating cart:", error);
+            toast.error('Error updating cart');
         }
     };
+
     const removeProduct = async (productId) => {
         try {
             const response = await axios.delete(`${import.meta.env.VITE_URL}/removeFromCart`, {
                 data: { userId, productId }
             });
             console.log("Product Removed:", response.data);
+            toast.success('Product removed from cart');
             getCart(userId); // Refresh the cart
         } catch (error) {
             console.error("Error removing product from cart:", error);
+            toast.error('Error removing product from cart');
+
         }
     };
+
     const calculateTotal = () => {
         return cart.products.reduce((total, product) => {
-            return total + (product.productId.price * product.quantity);
+            const price = product.productId?.price || 0; // Ensure price is not null or undefined
+            return total + (price * product.quantity);
         }, 0);
     };
 
     if (!cart) {
         return <div>Loading...</div>;
     }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Header />
@@ -84,38 +102,36 @@ function AddToCart() {
                                 <div>Subtotal</div>
                             </div>
 
-                            {/* LCD Monitor */}
                             {cart.products && cart.products.map(product => (
-                                <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
-                                    <div className="col-span-2 flex items-center space-x-4">
-                                    <button className="text-gray-400 hover:text-gray-600" onClick={() => removeProduct(product.productId._id)}>
-                                            <X className="w-5 h-5" />
-                                        </button>
-                                        <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
-                                        <span>{product.productId.productName}</span>
-                                    </div>
-                                    <div>${product.productId.price}</div>
-                                    <div>
-                                        <div className="flex items-center">
-                                            <input
-                                                type="number"
-                                                min="0"
-                                                name="quantity"
-                                                value={quantities[product.productId._id] || product.quantity} // updated value dikhane ke liye
-                                                onChange={(e) => {
-                                                    const newValue = parseInt(e.target.value) || 0;
-                                                    updateQuantity(product.productId._id, newValue); // quantity update karne ka function
-                                                }}
-                                                className="w-16 border rounded px-2 py-1"
-                                            />
-
+                                product.productId && (
+                                    <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
+                                        <div className="col-span-2 flex items-center space-x-4">
+                                            <button className="text-gray-400 hover:text-gray-600" onClick={() => removeProduct(product.productId._id)}>
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                            <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
+                                            <span>{product.productId.productName}</span>
                                         </div>
+                                        <div>${product.productId.price}</div>
+                                        <div>
+                                            <div className="flex items-center">
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    name="quantity"
+                                                    value={quantities[product.productId._id] || product.quantity} // updated value dikhane ke liye
+                                                    onChange={(e) => {
+                                                        const newValue = parseInt(e.target.value) || 0;
+                                                        updateQuantity(product.productId._id, newValue); // quantity update karne ka function
+                                                    }}
+                                                    className="w-16 border rounded px-2 py-1"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>${product.productId.price * product.quantity}</div>
                                     </div>
-                                    <div>${product.productId.price * product.quantity}</div>
-                                </div>
+                                )
                             ))}
-
-
                         </div>
 
                         <div className="mt-6 flex justify-between">

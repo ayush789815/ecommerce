@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Wishlist() {
     const [wishlist, setWishlist] = useState(null);
@@ -13,6 +14,7 @@ function Wishlist() {
             setWishlist(response.data);
         } catch (error) {
             console.error('Error fetching wishlist:', error);
+            toast.error('Error fetching wishlist');
         }
     };
 
@@ -29,9 +31,11 @@ function Wishlist() {
                 productId
             });
             console.log("Product Added to Wishlist:", response.data);
+            toast.success('Product added to wishlist');
             getWishlist(userId); 
         } catch (error) {
             console.error("Error adding product to wishlist:", error);
+            toast.error('Error adding product to wishlist');
         }
     };
 
@@ -41,9 +45,11 @@ function Wishlist() {
                 data: { userId, productId }
             });
             console.log("Product Removed from Wishlist:", response.data);
+            toast.success('Product removed from wishlist');
             getWishlist(userId); // Refresh the wishlist
         } catch (error) {
             console.error("Error removing product from wishlist:", error);
+            toast.error('Error removing product from wishlist');
         }
     };
 
@@ -70,8 +76,8 @@ function Wishlist() {
                             {wishlist.products && wishlist.products.map(product => (
                                 <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
                                     <div className="col-span-2 flex items-center space-x-4">
-                                    <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
-                                    <span>{product.productId.productName}</span>
+                                        <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
+                                        <span>{product.productId.productName}</span>
                                     </div>
                                     <div>${product.productId.price}</div>
                                     <div>

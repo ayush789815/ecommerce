@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -26,6 +28,18 @@ function App() {
         <Route path='/category/:category' element={<CategoryPage />} />
         {/* <Route path='/getAllProductsBycategory' element={<} */}
       </Routes>
+      <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+     />
     </BrowserRouter>
   );
 }

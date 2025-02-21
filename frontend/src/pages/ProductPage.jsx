@@ -3,6 +3,7 @@ import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
 import { addToCart } from '../axios/axios';
@@ -50,10 +51,10 @@ function ProductPage() {
     const handleAddToCart = async () => {
         try {
             await addToCart(userId, productId, quantity);
-            alert("Product added to cart");
+            toast.success("Product added to cart",{});
         } catch (error) {
             console.error('Error adding product to cart:', error);
-            alert("Failed to add product to cart");
+            toast.error("Failed to add product to cart");
         }
     };
 
@@ -63,10 +64,13 @@ function ProductPage() {
                 userId,
                 productId
             });
+
             console.log("Product Added to Wishlist:", response.data);
             setIsInWishlist(true);
+            toast.success("Product added to wishlist");
         } catch (error) {
             console.error("Error adding product to wishlist:", error);
+            toast.error("Failed to add product to wishlist");
         }
     };
 
@@ -77,8 +81,10 @@ function ProductPage() {
             });
             console.log("Product Removed from Wishlist:", response.data);
             setIsInWishlist(false);
+            toast.success("Product removed from wishlist");
         } catch (error) {
             console.error("Error removing product from wishlist:", error);
+            toast.error("Failed to remove product from wishlist");
         }
     };
 
