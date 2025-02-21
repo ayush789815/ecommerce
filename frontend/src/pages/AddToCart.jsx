@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
-<<<<<<< HEAD
-import AnnouncementBar from '../component/Header/AnnouncementBar';
-import axios from "axios"
-import { Link } from 'react-router-dom';
-function AddToCart() {
-    const [quantities, setQuantities] = useState({ monitor: 1, gamepad: 2 });
-    const [cart, setCart] = useState(null);
-    const userId = localStorage.getItem('userId')
-=======
 import axios from "axios";
->>>>>>> 0b708a8fae923f6acca72f69a21d1a973d8c9a6e
-
+import { Link } from 'react-router-dom';
 function AddToCart() {
     const [quantities, setQuantities] = useState({});
     const [cart, setCart] = useState(null);
