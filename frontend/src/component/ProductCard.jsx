@@ -17,6 +17,7 @@ export default function ProductCard({ product }) {
         const productExists = wishlist.products.some(p => p.productId._id === product._id);
         setIsInWishlist(productExists);
       } catch (error) {
+        console.log(error);
         console.error("Error fetching wishlist:", error);
       }
     };

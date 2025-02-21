@@ -190,11 +190,12 @@ export default function AddProduct() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >
                       <option value="">Select type</option>
-                      <option value="moisturizer">Moisturizer</option>
-                      <option value="cleanser">Cleanser</option>
-                      <option value="serum">Serum</option>
-                      <option value="toner">Toner</option>
-                      <option value="mask">Face Mask</option>
+                      <option value="mobile">Mobile</option>
+                      <option value="computer">Computer</option>
+                      <option value="smart watch">Smart Watch</option>
+                      <option value="laptop">Laptop</option>
+                      <option value="headPhones">HeadPhones</option>
+                      <option value="gaming">Gaming</option>
                     </select>
                   </div>
                 </div>
