@@ -3,7 +3,7 @@ import Header from '../component/Header/Header'
 import FlashSale from '../component/sections/FlashSale'
 import Categories from '../component/sections/Categories'
 import BestSelling from '../component/sections/BestSelling'
-import MusicBanner from '../component/sections/MusicBanner'
+import AdBanner from '../component/sections/AdBanner'
 import NewArrivals from '../component/sections/NewArrivals'
 import Services from '../component/sections/Services'
 import Footer from '../component/Footer'
@@ -77,7 +77,7 @@ export default function HomePage () {
     <div>
       <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <MusicBanner />
+        <AdBanner />
         <FlashSale products={product}  />
         <Categories categories={categories} />
         <BestSelling products={bestSelling} />
