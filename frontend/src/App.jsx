@@ -12,6 +12,7 @@ import Wishlist from './pages/Wishlist';
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import CategoryPage from './pages/CategoryPage';
+import SearchPage from './pages/SearchPage'; 
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +27,8 @@ function App() {
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/category/:category' element={<CategoryPage />} />
+        <Route path='/search' element={<SearchPage />} /> {/* Add the SearchPage route */}
+
         {/* <Route path='/getAllProductsBycategory' element={<} */}
       </Routes>
       <ToastContainer
