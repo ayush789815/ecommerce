@@ -14,7 +14,7 @@ const CategoryPage = () => {
     const fetchProductsByCategory = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_URL}/products/category/${category}`);
-        console.log('API Response:', response.data); // Debugging log
+        console.log('API Response:', response.data); 
         setProducts(response.data.products);
         setLoading(false);
       } catch (error) {

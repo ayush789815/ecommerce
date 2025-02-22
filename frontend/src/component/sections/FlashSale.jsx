@@ -1,45 +1,29 @@
 import { useState } from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import SectionTitle from '../SectionTitle';
 import Timer from '../Timer';
 import ProductCard from '../ProductCard';
-import ProductPage from '../../pages/ProductPage';
+import { VscArrowDown } from "react-icons/vsc"; 
 
 export default function FlashSale({ products, time }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 4;
+  const [rowsToShow, setRowsToShow] = useState(2); // State to keep track of rows to display
+  const productsPerRow = 4;
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(0, rowsToShow * productsPerRow);
 
-  const totalPages = Math.ceil(products.length / productsPerPage);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+  const handleShowMore = () => {
+    setRowsToShow(rowsToShow + 2); // Increase the number of rows to display by 2
+  };
+  const handleShowLess = () => {
+    if (rowsToShow > 2) {
+      setRowsToShow(rowsToShow - 2); // Decrease the number of rows to display by 2
     }
   };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <section className="mb-16">
       <div className="flex justify-between items-center mb-8">
         <SectionTitle title="Flash Sales" />
         <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
-                <div className="flex gap-2">
-          <button onClick={handlePrevPage} className="p-2 border rounded-full cursor-pointer" disabled={currentPage === 1}>
-            <FiChevronLeft />
-          </button>
-          <button onClick={handleNextPage} className="p-2 border rounded-full cursor-pointer" disabled={currentPage === totalPages}>
-            <FiChevronRight />
-          </button>
-        </div>
+        <VscArrowDown />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -48,7 +32,18 @@ export default function FlashSale({ products, time }) {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-     
+      <div className="flex justify-center gap-4">
+        {currentProducts.length < products.length && (
+          <button onClick={handleShowMore} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Show More
+          </button>
+        )}
+        {rowsToShow > 2 && (
+          <button onClick={handleShowLess} className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+            Show Less
+          </button>
+        )}
+      </div>
       
       
     </section>

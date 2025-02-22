@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
+import Footer from '../component/Footer';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -74,26 +75,29 @@ function Wishlist() {
                             </div>
 
                             {wishlist.products && wishlist.products.map(product => (
-                                <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
-                                    <div className="col-span-2 flex items-center space-x-4">
-                                        <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
-                                        <span>{product.productId.productName}</span>
+                                product.productId && (
+                                    <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
+                                        <div className="col-span-2 flex items-center space-x-4">
+                                            <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
+                                            <span>{product.productId.productName}</span>
+                                        </div>
+                                        <div>${product.productId.price}</div>
+                                        <div>
+                                            <button className="text-gray-400 hover:text-gray-600" onClick={() => removeFromWishlist(product.productId._id)}>
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                            <button className="text-gray-400 hover:text-gray-600" onClick={() => addToWishlist(product.productId._id)}>
+                                                <Heart className="w-5 h-5" />
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div>${product.productId.price}</div>
-                                    <div>
-                                        <button className="text-gray-400 hover:text-gray-600" onClick={() => removeFromWishlist(product.productId._id)}>
-                                            <X className="w-5 h-5" />
-                                        </button>
-                                        <button className="text-gray-400 hover:text-gray-600" onClick={() => addToWishlist(product.productId._id)}>
-                                            <Heart className="w-5 h-5" />
-                                        </button>
-                                    </div>
-                                </div>
+                                )
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
