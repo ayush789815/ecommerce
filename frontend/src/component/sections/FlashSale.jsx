@@ -19,7 +19,7 @@ export default function FlashSale({ products, time }) {
     }
   };
   return (
-    <section className="mb-16">
+    <section className="my-10">
       <div className="flex justify-between items-center mb-8">
         <SectionTitle title="Flash Sales" />
         <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
