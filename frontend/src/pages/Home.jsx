@@ -76,7 +76,7 @@ export default function HomePage () {
   return (
     <div>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="mx-auto px-4 py-8">
         <AdBanner />
         <FlashSale products={product}  />
         <Categories categories={categories} />
