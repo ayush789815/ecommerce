@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
 import { addToCart } from '../axios/axios';
+import Order from '../component/OrderButton/Order.jsx'
 
 function ProductPage() {
     const { productId } = useParams();
@@ -154,9 +155,11 @@ function ProductPage() {
                             >
                                 {isInWishlist ? <FaHeart className="text-red-500" /> : <FiHeart />}
                             </button>
-                            <button className="bg-red-500 text-white px-8 py-2 rounded-lg hover:bg-red-600">
+                            {/* <button className="bg-red-500 text-white px-8 py-2 rounded-lg hover:bg-red-600">
                                 Buy Now
-                            </button>
+                            </button> */}
+                            <Order productId={product._id} amount={product.price} /> {/* Add Order component */}
+                        
                         </div>
 
                         <div className='pb-4 flex gap-4'>
