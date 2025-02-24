@@ -31,7 +31,7 @@ function ProductPage() {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_URL}/wishlist/${userId}`);
                 const wishlist = response.data;
-                const productExists = wishlist.products.some(p => p.productId._id === productId);
+                const productExists = wishlist.products.some(p => p.productId && p.productId._id === productId);
                 setIsInWishlist(productExists);
             } catch (error) {
                 console.error("Error fetching wishlist:", error);
@@ -51,7 +51,7 @@ function ProductPage() {
     const handleAddToCart = async () => {
         try {
             await addToCart(userId, productId, quantity);
-            toast.success("Product added to cart",{});
+            toast.success("Product added to cart", {});
         } catch (error) {
             console.error('Error adding product to cart:', error);
             toast.error("Failed to add product to cart");

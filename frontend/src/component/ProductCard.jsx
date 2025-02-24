@@ -7,21 +7,21 @@ import { toast } from 'react-toastify';
 
 export default function ProductCard({ product }) {
   const userId = localStorage.getItem('userId'); // Get userId from local storage
-  const [isInWishlist, setIsInWishlist] = useState(''); // State to track if the product is in the wishlist
+  const [isInWishlist, setIsInWishlist] = useState(false); // State to track if the product is in the wishlist
 
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_URL}/wishlist/${userId}`);
         const wishlist = response.data;
-        const productExists = wishlist.products.some(p => p.productId._id === product._id);
-        setIsInWishlist(productExists);
+        if (wishlist && wishlist.products) {
+          const productExists = wishlist.products.some(p => p.productId && p.productId._id === product._id);
+          setIsInWishlist(productExists);
+                }       
       } catch (error) {
-        console.log(error);
         console.error("Error fetching wishlist:", error);
       }
     };
-
     fetchWishlist();
   }, [userId, product._id]);
 
