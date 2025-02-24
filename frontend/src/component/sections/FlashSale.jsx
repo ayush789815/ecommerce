@@ -26,8 +26,6 @@ export default function FlashSale({ products, time }) {
         <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
       </div>
         <SectionTitle title="Flash Sales" />
-      <SectionTitle title="Flash Sales" />
-      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         
         {currentProducts.map(product => (
@@ -46,8 +44,8 @@ export default function FlashSale({ products, time }) {
           </button>
         )}
       </div>
-      
-      
+      </section>
+      </div>
     </section>
   );
 }
