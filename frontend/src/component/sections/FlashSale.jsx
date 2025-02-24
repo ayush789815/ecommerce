@@ -21,10 +21,11 @@ export default function FlashSale({ products, time }) {
   return (
     <section className="my-10">
       <div className="flex justify-center  items-center mb-8">
+    <section className="mb-16">
+      <div className="flex justify-center items-center m-8">
         <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
       </div>
         <SectionTitle title="Flash Sales" />
-      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         
         {currentProducts.map(product => (
@@ -43,8 +44,8 @@ export default function FlashSale({ products, time }) {
           </button>
         )}
       </div>
-      
-      
+      </section>
+      </div>
     </section>
   );
 }
