@@ -4,8 +4,8 @@ import CategoryCard from '../CategoryCard'
 
 export default function Categories({ categories }) {
   return (
-    <section className="mb-16">
-      <div className="flex justify-between items-center mb-8">
+    <section className="mb-10">
+      <div className="flex justify-between items-center">
         <SectionTitle title="Browse By Category" />
         <div className="flex gap-2">
           <button className="p-2 border rounded-full">

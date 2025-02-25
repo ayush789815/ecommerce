@@ -19,32 +19,32 @@ export default function FlashSale({ products, time }) {
     }
   };
   return (
-    <section className="my-10">
-      <div className="flex justify-center  items-center mb-8">
-    <section className="mb-16">
-      <div className="flex justify-center items-center m-8">
-        <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
-      </div>
-        <SectionTitle title="Flash Sales" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-        
-        {currentProducts.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-      <div className="flex justify-center gap-4">
-        {currentProducts.length < products.length && (
-          <button onClick={handleShowMore} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            Show More
-          </button>
-        )}
-        {rowsToShow > 2 && (
-          <button onClick={handleShowLess} className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
-            Show Less
-          </button>
-        )}
-      </div>
-      </section>
+    <section className="mt-6">
+      <div className="flex justify-center  items-center mb-6">
+      <section className="">
+        <div className="flex justify-center items-center">
+          <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
+        </div>
+          <SectionTitle title="Flash Sales" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          
+          {currentProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+        <div className="flex justify-center gap-4">
+          {currentProducts.length < products.length && (
+            <button onClick={handleShowMore} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              Show More
+            </button>
+          )}
+          {rowsToShow > 2 && (
+            <button onClick={handleShowLess} className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+              Show Less
+            </button>
+          )}
+        </div>
+        </section>
       </div>
     </section>
   );
