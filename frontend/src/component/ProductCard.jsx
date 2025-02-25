@@ -55,12 +55,12 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="relative border rounded-lg p-4 group">
+    <div className="relative p-4 group bg-zinc-100">
       <div className="relative mb-4">
         <img
           src={product.image}
           alt={product.productName}
-          className="w-full h-68 object-cover rounded-lg"
+          className="w-full h-68 object-cover"
         />
         {product.discount && (
           <span className="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded">

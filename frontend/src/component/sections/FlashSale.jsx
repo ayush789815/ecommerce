@@ -20,7 +20,7 @@ export default function FlashSale({ products, time }) {
   };
   return (
     <section className="mt-6">
-      <div className="flex justify-center  items-center mb-6">
+      <div className="flex justify-center items-center mb-6">
       <section className="">
         <div className="flex justify-center items-center">
           <Timer initialTime={{ hours: 24, minutes: 0, seconds: 0 }} />
@@ -34,12 +34,12 @@ export default function FlashSale({ products, time }) {
         </div>
         <div className="flex justify-center gap-4">
           {currentProducts.length < products.length && (
-            <button onClick={handleShowMore} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <button onClick={handleShowMore} className="px-4 py-2 bg-neutral-400 rounded text-zinc-100 hover:bg-stone-500 shadow-2xs">
               Show More
             </button>
           )}
           {rowsToShow > 2 && (
-            <button onClick={handleShowLess} className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+            <button onClick={handleShowLess} className="px-4 py-2 bg-neutral-400 rounded text-zinc-100 hover:bg-stone-500 shadow-2xs">
               Show Less
             </button>
           )}

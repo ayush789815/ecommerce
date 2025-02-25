@@ -87,7 +87,7 @@ export default function MainHeader() {
       </div>
 
       {/* Categories */}
-      <div className="flex justify-center py-2 ">
+      <div className="flex justify-center py-2 bg-zinc-100">
         <nav className="flex gap-6 px-8 text-gray-700 text-sm">
           <Link to="/categories/electronics" className="hover:text-primary">Electronics</Link>
           <Link to="/categories/mens" className="hover:text-primary">Men</Link>
