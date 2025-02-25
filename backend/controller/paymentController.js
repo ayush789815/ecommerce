@@ -1,5 +1,6 @@
 const instance = require("../utils/razorpayInstance");
 const crypto = require('crypto');
+const Payment = require('../models/payment.Model')
 
 exports.checkout = async (req, res, next) => {
     try {
@@ -33,6 +34,7 @@ exports.paymentVerification = async (req, res, next) => {
        
         if (generated_signature == razorpay_signature) {
             
+            await Payment.create({ razorpay_order_id, razorpay_payment_id, razorpay_signature })
             res.redirect(`http://localhost:5173/payment-success?reference_no=${razorpay_payment_id}`);
             // res.status(200).json({
             //     success: true,
