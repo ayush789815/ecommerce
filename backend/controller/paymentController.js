@@ -1,4 +1,5 @@
 const instance = require("../utils/razorpayInstance");
+const crypto = require('crypto');
 
 exports.checkout = async (req, res, next) => {
     try {
@@ -7,7 +8,6 @@ exports.checkout = async (req, res, next) => {
             currency: "INR",
         };
         const order = await instance.orders.create(options);
-        console.log(order);
         res.status(200).json({
             success: true,
             order
@@ -23,12 +23,28 @@ exports.checkout = async (req, res, next) => {
 };
 
 exports.paymentVerification = async (req, res, next) => {
+
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const secret = process.env.RAZORPAY_API_SECRET;
     try {
-        console.log(req.body);
+        const generated_signature = crypto.createHmac('sha256', secret)
+        .update(razorpay_order_id + "|" + razorpay_payment_id)
+        .digest('hex');
+       
+        if (generated_signature == razorpay_signature) {
+            
+            res.redirect(`http://localhost:5173/payment-success?reference_no=${razorpay_payment_id}`);
+            // res.status(200).json({
+            //     success: true,
+            //     message:'payment is successful' 
+            // });
+        } else {
+            res.status(500).json({
+                success: false,
+                message:'payment is failed' 
+            });
+        }
         
-        res.status(200).json({
-            success: true,
-        });
     } catch (error) {
         console.error('Error payment verification:', error);
         res.status(500).json({

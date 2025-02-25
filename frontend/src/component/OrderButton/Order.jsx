@@ -25,7 +25,7 @@ const Order = ({ productId, amount }) => {
         description: "Test Transaction",
         image: "https://example.com/your_logo",
         order_id: order.id,
-        callback_url: "http://localhost:5000/api/paymentVerification",
+        callback_url: "http://localhost:5000/api/paymentverification",
         notes: {
           address: "Razorpay Corporate Office"
         },
