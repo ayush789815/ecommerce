@@ -21,6 +21,61 @@ export default function MainHeader() {
     navigate("/login");
   };
 
+  const category = [
+    {
+      name: "Electronics",  
+      image: "https://rukminim2.flixcart.com/flap/86/86/image/69c6589653afdb9a.png?q=100"
+    },
+    {
+      name: "Men",
+      image: "https://rukminim2.flixcart.com/fk-p-flap/86/86/image/0d75b34f7d8fbcb3.png?q=100"
+    },
+    {
+      name: "Women",
+      image: "https://static-gcp.freepikcompany.com/web-app/media/freepik-26-2000.webp"
+    },
+    {
+      name: "Home & Kitchen",
+      image: "https://img.freepik.com/free-photo/beautiful-shot-modern-house-kitchen_181624-1846.jpg?t=st=1740483862~exp=1740487462~hmac=87a8d85c88fa4e81285b408a1d4707d133004337a1eb11bbd4ff39b3e78638a9&w=1480"
+    },
+    {
+      name: "Beauty & Health",
+      image: "https://img.freepik.com/free-psd/elegant-makeup-collection-cream-foundation-brush-mascara_191095-83817.jpg?t=st=1740483254~exp=1740486854~hmac=bb365d70fc348aa1bbcfe22224f33a80903a7918c51dbfb938130078885e7802&w=996"
+    },
+    {
+      name: "Jewellery & Accessories",
+      image: "https://img.freepik.com/free-psd/stunning-emerald-diamond-necklace-display-luxurious-jewelry-exquisite-craftsmanship-precious-gemstones-elegant-design-highend-fashion-accessory-beautiful-green-gems_632498-31163.jpg?t=st=1740483345~exp=1740486945~hmac=ff03b861ed65bb2d77db350e65d951eb09d95ec5bb94b8b9657ff66ef9b46a74&w=996"
+    },
+    {
+      name: "Bags & Footwear",
+      image: "https://img.freepik.com/free-photo/stylish-woman-carrying-handbag-ready-shopping_60438-4020.jpg?t=st=1740483494~exp=1740487094~hmac=e58a066b0bf90ccd441c7a9cbd357bc97841c0eaea172a2e678375201853f57a&w=1800"
+    },
+    {
+      name: "Sports & Fitness",
+      image: "https://img.freepik.com/free-photo/bodybuilder-training-arm-with-resistance-band_7502-4758.jpg?t=st=1740482724~exp=1740486324~hmac=6f07c412a5ecde7e9f6147dbca34d520c246f56fd04a4913a05ba4aa57cbc50c&w=1480"
+    },
+    {
+      name: "Car & Motorbike",
+      image: "https://img.freepik.com/premium-photo/view-motorcycle-with-car_1048944-7925060.jpg?w=1480"
+    },
+    {
+      name: "Office Supplies & Stationery",
+      image: "https://img.freepik.com/free-photo/top-view-picture-frame-with-colorful-pencils-dark-surface-art-color-drawing-college-copybook-school-notepad_140725-108970.jpg?t=st=1740481946~exp=1740485546~hmac=0f8fd153fff7756d85d4cdabb448e120734c4f3fc24dd866db9e998595450ab4&w=1480"
+    },
+    {
+      name: "Pet Supplies",
+      image: "https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg?t=st=1740481688~exp=1740485288~hmac=370083eaa51971fee85e1012f3ff711518fa22f9946cbbf6586d737281d9a596&w=740"
+    },
+    {
+      name: "Food & Drinks",
+      image: "https://b.zmtcdn.com/webFrontend/e5b8785c257af2a7f354f1addaf37e4e1647364814.jpeg?output-format=webp&fit=around|402:360&crop=402:360;*,*"
+    },
+    {
+      name: "Musical Instruments",
+      image: "https://img.freepik.com/premium-photo/still-life-percussion-instrument_23-2151602727.jpg?w=1480"
+    },
+  ]
+
   return (
     <header className="flex flex-col bg-white shadow-md">
       <div className="flex justify-between items-center px-8 py-4 border-b border-gray-300 bg-gray-50 relative z-50">
@@ -39,7 +94,7 @@ export default function MainHeader() {
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900">
-            <FiSearch className="cursor-pointer hover:text-primary"/>
+            <FiSearch className="cursor-pointer hover:text-primary" />
           </button>
         </form>
 
@@ -51,7 +106,7 @@ export default function MainHeader() {
           <Link to="/addToCart">
             <FiShoppingCart className="cursor-pointer hover:text-primary" />
           </Link>
-          
+
           {/* User Dropdown */}
           <div
             className="relative"
@@ -63,7 +118,7 @@ export default function MainHeader() {
             }}
           >
             <FiUser className="cursor-pointer hover:text-primary" />
-            <div 
+            <div
               ref={dropdownRef}
               className={`absolute right-0 w-56 px-2 py-4 bg-zinc-50 shadow-lg text-sm transition-opacity duration-100 ${isDropdownVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
               onMouseEnter={() => setIsDropdownVisible(true)}
@@ -88,20 +143,17 @@ export default function MainHeader() {
 
       {/* Categories */}
       <div className="flex justify-center py-2 bg-zinc-100">
-        <nav className="flex gap-6 px-8 text-gray-700 text-sm">
-          <Link to="/categories/electronics" className="hover:text-primary">Electronics</Link>
-          <Link to="/categories/mens" className="hover:text-primary">Men</Link>
-          <Link to="/categories/women" className="hover:text-primary">Women</Link>
-          <Link to="/categories/home-kitchen" className="hover:text-primary">Home & Kitchen</Link>
-          <Link to="/categories/beauty-health" className="hover:text-primary">Beauty & Health</Link>
-          <Link to="/categories/jewellery-accessories" className="hover:text-primary">Jewellery & Accessories</Link>
-          <Link to="/categories/bags-footwear" className="hover:text-primary">Bags & Footwear</Link>
-          <Link to="/categories/sports-fitness" className="hover:text-primary">Sports & Fitness</Link>
-          <Link to="/categories/car-motorbike" className="hover:text-primary">Car & Motorbike</Link>
-          <Link to="/categories/office-stationery" className="hover:text-primary">Office Supplies & Stationery</Link>
-          <Link to="/categories/pet-supplies" className="hover:text-primary">Pet Supplies</Link>
-          <Link to="/categories/food-drinks" className="hover:text-primary">Food & Drinks</Link>
-          <Link to="/categories/musical-instruments" className="hover:text-primary">Musical Instruments</Link>
+        <nav className="">
+
+          <div className="flex items-center gap-6 px-8 text-gray-700 text-sm">
+            {category.map((cat, index) => (
+              <Link key={index} to={`/categories/${cat.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className="flex items-center justify-center flex-col hover:text-primary">
+                <img src={cat.image} className="w-18 h-18 mb-2" alt={cat.name} />
+                <span className="flex justify-center text-center">{cat.name}</span>
+              </Link>
+            ))}
+
+          </div>
         </nav>
       </div>
     </header>
