@@ -5,6 +5,7 @@ import { addProduct } from "../axios/axios";
 const initialProduct = {
   productName: '',
   category: '',
+  productType: '', // Add productType field
   price: '',
   discount: '',
   originalPrice: '',
@@ -13,6 +14,22 @@ const initialProduct = {
   rating: '',
   reviews: ''
 };
+
+const categories = [
+  "Electronics",
+  "Men",
+  "Women",
+  "Home & Kitchen",
+  "Beauty & Health",
+  "Jewellery & Accessories",
+  "Bags & Footwear",
+  "Sports & Fitness",
+  "Car & Motorbike",
+  "Office Supplies & Stationery",
+  "Pet Supplies",
+  "Food & Drinks",
+  "Musical Instruments"
+];
 
 export default function AddProduct() {
   const [product, setProduct] = useState(initialProduct);
@@ -196,6 +213,20 @@ export default function AddProduct() {
                       <option value="laptop">Laptop</option>
                       <option value="headPhones">HeadPhones</option>
                       <option value="gaming">Gaming</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-600 mb-1">Product Type</label>
+                    <select
+                      name="productType"
+                      value={product.productType}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="">Select type</option>
+                      {categories.map((cat, index) => (
+                        <option key={index} value={cat}>{cat}</option>
+                      ))}
                     </select>
                   </div>
                 </div>

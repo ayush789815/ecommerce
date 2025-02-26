@@ -1,7 +1,7 @@
 const productModel = require('../models/product.Model');
 const Cart = require('../models/cart.Model');
 exports.createProduct = async (req, res) => {
-    const { productName, image, price, rating, discount, originalPrice, reviews, category ,addwishlist} = req.body;
+    const { productName, image, price, rating, discount, originalPrice, reviews, category ,productType ,addwishlist} = req.body;
     try {
         const newProduct = await productModel.create({
             productName,
@@ -12,6 +12,7 @@ exports.createProduct = async (req, res) => {
             originalPrice,
             reviews,
             category,
+            productType,
             addwishlist
         })
         res.status(201).json({ product: newProduct, message: 'Product created successfully' });
@@ -135,6 +136,16 @@ exports.getProductsByCategory = async (req, res) => {
         const products = await productModel.find({ category });
         console.log('Products Found:', products); // Debugging log
 
+        res.status(200).json({ products });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+exports.getProductsByProductType = async (req, res) => {
+    const { productType } = req.params;
+    try {
+        const products = await productModel.find({ productType });
         res.status(200).json({ products });
     } catch (error) {
         console.log(error);
