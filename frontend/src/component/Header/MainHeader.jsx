@@ -39,7 +39,7 @@ export default function MainHeader() {
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900">
-            <FiSearch />
+            <FiSearch className="cursor-pointer hover:text-primary"/>
           </button>
         </form>
 
@@ -65,7 +65,7 @@ export default function MainHeader() {
             <FiUser className="cursor-pointer hover:text-primary" />
             <div 
               ref={dropdownRef}
-              className={`absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 text-sm transition-opacity duration-300 ${isDropdownVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+              className={`absolute right-0 w-56 px-2 py-4 bg-zinc-50 shadow-lg text-sm transition-opacity duration-100 ${isDropdownVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
               onMouseEnter={() => setIsDropdownVisible(true)}
               onMouseLeave={() => setIsDropdownVisible(false)}
             >
@@ -87,7 +87,7 @@ export default function MainHeader() {
       </div>
 
       {/* Categories */}
-      <div className="flex justify-center py-2 ">
+      <div className="flex justify-center py-2 bg-zinc-100">
         <nav className="flex gap-6 px-8 text-gray-700 text-sm">
           <Link to="/categories/electronics" className="hover:text-primary">Electronics</Link>
           <Link to="/categories/mens" className="hover:text-primary">Men</Link>

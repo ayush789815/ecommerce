@@ -3,7 +3,7 @@ const { checkout,paymentVerification,getKey } = require('../controller/paymentCo
 const router = Router();
 
 router.post('/checkout', checkout)
-router.get('/paymentverification', paymentVerification)
+router.post('/paymentverification', paymentVerification)
 router.get('/getkey', getKey)
 
 module.exports = router;

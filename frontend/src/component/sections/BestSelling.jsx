@@ -19,7 +19,7 @@ export default function BestSelling({ products }) {
   };
 
   return (
-    <section className="mb-16 flex flex-col gap-8">
+    <section className="flex flex-col">
       <div className="flex justify-between items-center ">
         <SectionTitle title="Best Selling Products" />
         <button className="btn-primary">View All</button>
@@ -30,14 +30,14 @@ export default function BestSelling({ products }) {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 mt-8">
         {currentProducts.length < products.length && (
-          <button onClick={handleShowMore} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          <button onClick={handleShowMore}  className="px-4 py-2 bg-neutral-400 rounded text-zinc-100 hover:bg-stone-500 shadow-2xs">
             Show More
           </button>
         )}
         {rowsToShow > 2 && (
-          <button onClick={handleShowLess} className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+          <button onClick={handleShowLess}  className="px-4 py-2 bg-neutral-400 rounded text-zinc-100 hover:bg-stone-500 shadow-2xs">
             Show Less
           </button>
         )}
