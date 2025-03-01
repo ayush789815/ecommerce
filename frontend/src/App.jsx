@@ -14,7 +14,6 @@ import AboutPage from './pages/AboutPage';
 import CategoryPage from './pages/CategoryPage';
 import SearchPage from './pages/SearchPage';
 import PaymentSuccess from './pages/PaymentSuccess';
-import ProtectedRoute from './pages/ProtectedRoute'; // Import ProtectedRoute
 
 function App() {
   return (
