@@ -21,9 +21,9 @@ export default function MainHeader() {
     navigate("/login");
   };
 
-  const category = [
+  const productType = [
     {
-      name: "Electronics",  
+      name: "Electronic",  
       image: "https://rukminim2.flixcart.com/flap/86/86/image/69c6589653afdb9a.png?q=100"
     },
     {
@@ -146,8 +146,8 @@ export default function MainHeader() {
         <nav className="">
 
           <div className="flex items-center gap-6 px-8 text-gray-700 text-sm">
-            {category.map((cat, index) => (
-              <Link key={index} to={`/categories/${cat.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className="flex items-center justify-center flex-col hover:text-primary">
+            {productType.map((cat, index) => (
+              <Link key={index} to={`/productType/${cat.name}`} className="flex items-center justify-center flex-col hover:text-primary">
                 <img src={cat.image} className="w-18 h-18 mb-2" alt={cat.name} />
                 <span className="flex justify-center text-center">{cat.name}</span>
               </Link>

@@ -29,8 +29,8 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     productType: {
-        type: String,
-        required: true // Ensure productType is required
+        type: [String],
+        required: true 
     },
     addwishlist: {
         type: Boolean

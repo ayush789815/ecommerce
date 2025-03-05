@@ -1,8 +1,9 @@
 const productModel = require('../models/product.Model');
 const Cart = require('../models/cart.Model');
 exports.createProduct = async (req, res) => {
-    const { productName, image, price, rating, discount, originalPrice, reviews, category ,productType ,addwishlist} = req.body;
     try {
+        const { productName, image, price, rating, discount, originalPrice, reviews, category, productType, addwishlist } = req.body;
+        const formattedProductType = Array.isArray(productType) ? productType : [productType];
         const newProduct = await productModel.create({
             productName,
             image,
@@ -12,7 +13,7 @@ exports.createProduct = async (req, res) => {
             originalPrice,
             reviews,
             category,
-            productType,
+            productType: formattedProductType,
             addwishlist
         })
         res.status(201).json({ product: newProduct, message: 'Product created successfully' });
@@ -22,16 +23,41 @@ exports.createProduct = async (req, res) => {
 
     }
 }
+// exports.getAllProducts = async (req, res) => {
+//     try {
+//         const products = await productModel.find();
+//         res.status(200).json({ products });
+//         // console.log(products)
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ message: 'Server Error' });
+//     }
+// }
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await productModel.find();
-        res.status(200).json({ products });
-        // console.log(products)
+        let { page } = req.query;
+        page = parseInt(page) || 1; // Default page = 1
+
+        const limit = 8; // Products per page
+        const skip = (page - 1) * limit;
+
+        const products = await productModel.find().skip(skip).limit(limit);
+
+        const totalProducts = await productModel.countDocuments(); // Total products count
+        const totalPages = Math.ceil(totalProducts / limit); // Total pages
+
+        res.status(200).json({
+            page,
+            totalPages,
+            totalProducts,
+            products
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Server Error' });
     }
-}
+};
+
 exports.getProductById = async (req, res) => {
     try {
         const product = await productModel.findById(req.params.id)
@@ -143,12 +169,21 @@ exports.getProductsByCategory = async (req, res) => {
     }
 };
 exports.getProductsByProductType = async (req, res) => {
-    const { productType } = req.params;
     try {
-        const products = await productModel.find({ productType });
+        const { productType } = req.params;
+
+        // Ensure productType is treated correctly for filtering
+        const products = await productModel.find({
+            productType: { $in: productType.split(',') } // Allow multiple types in URL
+        });
+
+        if (products.length === 0) {
+            return res.status(404).json({ message: "No products found for this product type" });
+        }
+
         res.status(200).json({ products });
     } catch (error) {
-        console.log(error);
+        console.error("Error in getProductsByProductType:", error);
         res.status(500).json({ message: 'Server Error' });
     }
 };

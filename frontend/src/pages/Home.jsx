@@ -12,12 +12,17 @@ import axios from 'axios';
 export default function HomePage() {
   const [product, setProduct] = useState([]);
   const [bestSelling, setBestSelling] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_URL}/getProduct`);
-        setProduct(response.data.products);
+        const response = await axios.get(
+          `${import.meta.env.VITE_URL}/getProduct?page=${currentPage}`
+        );        setProduct(response.data.products);
+        setTotalPages(response.data.totalPages);
+
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -34,7 +39,7 @@ export default function HomePage() {
 
     fetchProducts();
     fetchBestSellingProducts();
-  }, []);
+  }, [currentPage]);
 
   const categories = [
     { id: 1, name: 'Mobile', icon: '📱' },
@@ -50,7 +55,7 @@ export default function HomePage() {
       <Header />
       <main className="mx-auto px-4 py-8">
         <AdBanner />
-        <FlashSale products={product} />
+        <FlashSale products={product} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
         <Categories categories={categories} />
         <BestSelling products={bestSelling} />
         {/* <NewArrivals /> */}

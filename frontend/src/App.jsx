@@ -12,6 +12,7 @@ import Wishlist from './pages/Wishlist';
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import CategoryPage from './pages/CategoryPage';
+import ProductTypePage from './pages/ProductTypePage';
 import SearchPage from './pages/SearchPage';
 import PaymentSuccess from './pages/PaymentSuccess';
 
@@ -29,7 +30,7 @@ function App() {
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/category/:category' element={<CategoryPage />} />
-        <Route path='/productType' element={<CategoryPage />} /> {/* Ensure this line is present */}
+        <Route path='/productType/:productType' element={<ProductTypePage />} /> {/* Ensure this line is present */}
         <Route path='/search' element={<SearchPage />} /> {/* Add the SearchPage route */}
         <Route path='/payment-success' element={<PaymentSuccess />} />
       </Routes>
