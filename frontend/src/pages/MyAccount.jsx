@@ -29,7 +29,7 @@ const ProfilePageAlt = () => {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((res) => {
-      console.log("API Response:", res.data);
+      console.log("API Response:", res.data.user);
       if (res.data && res.data.user) {
         setUserData(res.data.user);
       }
@@ -45,11 +45,11 @@ const ProfilePageAlt = () => {
   }, [userData]);
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token')
     try {
-      const response = axios.put(`${import.meta.env.VITE_URL}/auth/updateprofile`, formData, {
+      const response = await axios.put(`${import.meta.env.VITE_URL}/auth/updateprofile`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       console.log('Profile updated successfully:', response.data);
