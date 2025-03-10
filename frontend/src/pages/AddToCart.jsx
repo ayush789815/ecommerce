@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Search, ShoppingCart, User, X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import axios from "axios";
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+
 function AddToCart() {
     const [quantities, setQuantities] = useState({});
     const [cart, setCart] = useState(null);
