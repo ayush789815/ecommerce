@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import axios from "axios";
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
+=======
 import { Spinner } from "../components/ui/spinner";
 import { toast } from 'react-toastify';
+>>>>>>> 31915f869b04388bfb8bcf16de04042dea57fcb0
 
 function AddToCart() {
     const [quantities, setQuantities] = useState({});

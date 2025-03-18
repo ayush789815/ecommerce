@@ -15,7 +15,7 @@ import CategoryPage from './pages/CategoryPage';
 import ProductTypePage from './pages/ProductTypePage';
 import SearchPage from './pages/SearchPage';
 import PaymentSuccess from './pages/PaymentSuccess';
-
+import MyAccount from './pages/MyAccount';
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +33,8 @@ function App() {
         <Route path='/productType/:productType' element={<ProductTypePage />} /> {/* Ensure this line is present */}
         <Route path='/search' element={<SearchPage />} /> {/* Add the SearchPage route */}
         <Route path='/payment-success' element={<PaymentSuccess />} />
+        <Route path='/myaccount' element={<MyAccount/>} />
+
       </Routes>
       <ToastContainer
         position="top-center"

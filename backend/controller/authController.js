@@ -60,3 +60,51 @@ exports.logout = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+exports.getUser = async (req, res) => {
+    try {
+        const {userId} = req.params;
+        console.log('Fetching user with ID:', userId); // Add logging
+
+        const user = await User.findById(userId).select('-password');
+        if (!user) {
+            console.log('User not found'); // Add logging
+            return res.status(404).json({ message: "User not found" });
+        }
+        // console.log('User fetched successfully:', user); // Add logging
+        return res.status(200).json({ message: "User fetched successfully", user });
+    } catch (error) {
+        console.error('Error in fetching user:', error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+exports.getUserProfile = async (req, res, next) => {
+    if (!req.user) {
+        console.log('User not authenticated'); // Add logging
+        return res.status(401).json({ message: "User not authenticated" });
+    }
+    res.status(200).json({message: "User profile fetched successfully",user:req.user});
+}
+
+exports.updateProfile = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { name, email, profileImage, address, phone } = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, email, profileImage, address, phone },
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
