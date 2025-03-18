@@ -87,8 +87,6 @@ exports.getCart = async (req, res) => {
         res.status(500).json({ message: "Server Error", error });
     }
 };
-
-
 exports.addToCart = async (req, res) => {
     try {
         const { userId, productId, quantity } = req.body;
@@ -113,7 +111,6 @@ exports.addToCart = async (req, res) => {
         res.status(500).json({ message: "Server Error", error });
     }
 };
-
 exports.updateCart = async (req, res) => {
     try {
         const { userId, productId, quantity } = req.body;
@@ -185,5 +182,39 @@ exports.getProductsByProductType = async (req, res) => {
     } catch (error) {
         console.error("Error in getProductsByProductType:", error);
         res.status(500).json({ message: 'Server Error' });
+    }
+};
+exports.searchProducts = async (req, res) => {
+    try {
+        const query = req.query.q || "";
+        let { page, limit } = req.query;
+
+        page = parseInt(page) || 1;
+        limit = parseInt(limit) || 8;
+        const skip = (page - 1) * limit;
+
+        const regex = new RegExp(query, "i"); // Case-insensitive search
+
+        const products = await productModel
+            .find({
+                $or: [{ productName: regex }, { category: regex }],
+            })
+            .skip(skip)
+            .limit(limit);
+
+        const totalProducts = await productModel.countDocuments({
+            $or: [{ productName: regex }, { category: regex }],
+        });
+
+        res.status(200).json({
+            success: true,
+            page,
+            totalPages: Math.ceil(totalProducts / limit),
+            totalProducts,
+            products,
+        });
+    } catch (error) {
+        console.error("Search Error:", error);
+        res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 };

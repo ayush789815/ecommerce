@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer className="bg-black text-white pt-16 pb-8">
@@ -21,20 +23,20 @@ export default function Footer() {
 
           <div>
             <h3 className="font-bold mb-4">Support</h3>
-            <p className="mb-2">111 Bijoy sarani, Dhaka,</p>
-            <p className="mb-2">DH 1515, Bangladesh.</p>
+            <p className="mb-2">1343,Navjeevan Colony Bhopal</p>
+            <p className="mb-2">M.P. 462001 India</p>
             <p className="mb-2">exclusive@gmail.com</p>
-            <p>+88015-88888-9999</p>
+            <p>+91 8839042497</p>
           </div>
 
           <div>
             <h3 className="font-bold mb-4">Account</h3>
             <nav className="space-y-2">
-              <a href="#account" className="block hover:text-primary">My Account</a>
-              <a href="#login" className="block hover:text-primary">Login / Register</a>
-              <a href="#cart" className="block hover:text-primary">Cart</a>
-              <a href="#wishlist" className="block hover:text-primary">Wishlist</a>
-              <a href="#shop" className="block hover:text-primary">Shop</a>
+              <Link to={'/myaccount'} className="block hover:text-primary">My Account</Link>
+              <Link to={'/login'} className="block hover:text-primary">Login / Register</Link>
+              <Link to={'/addToCart'} className="block hover:text-primary">Cart</Link>
+              <Link to={'/wishlist'} className="block hover:text-primary">Wishlist</Link>
+              <Link to={'/home'} className="block hover:text-primary">Shop</Link>
             </nav>
           </div>
 
@@ -44,7 +46,7 @@ export default function Footer() {
               <a href="#privacy" className="block hover:text-primary">Privacy Policy</a>
               <a href="#terms" className="block hover:text-primary">Terms Of Use</a>
               <a href="#faq" className="block hover:text-primary">FAQ</a>
-              <a href="#contact" className="block hover:text-primary">Contact</a>
+              <Link to={'/contact'} className="block hover:text-primary">Contact</Link>
             </nav>
           </div>
         </div>
