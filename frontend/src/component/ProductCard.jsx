@@ -64,7 +64,7 @@ export default function ProductCard({ product }) {
         />
         {product.discount && (
           <span className="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded">
-            {product.discount}
+            {product.discount}%
           </span>
         )}
 
@@ -73,7 +73,7 @@ export default function ProductCard({ product }) {
           className="absolute top-2 right-2 bg-white p-2 rounded-full hover:bg-gray-100" >
           {isInWishlist ? <FaHeart className="text-red-500" /> : <FiHeart />}
         </button>
-        <Link className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-secondary text-white px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+        <Link className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gray-500 text-white px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity"
           to={`/product/${product._id}`}> Quick View
         </Link>
       </div>

@@ -4,6 +4,8 @@ import axios from 'axios';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
 import ProductCard from '../component/ProductCard';
+import { Spinner } from "../components/ui/spinner";
+
 
 const ProductTypePage = () => {
   const { productType } = useParams();
@@ -34,8 +36,13 @@ const ProductTypePage = () => {
   }, [productType]);
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-500">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner size="lg" color="blue" />
+      </div>
+    );
   }
+  
 
   return (
     <>
