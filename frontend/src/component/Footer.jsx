@@ -30,10 +30,10 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4">Account</h3>
             <nav className="space-y-2">
-              <a href="#account" className="block hover:text-primary">My Account</a>
-              <a href="#login" className="block hover:text-primary">Login / Register</a>
-              <a href="#cart" className="block hover:text-primary">Cart</a>
-              <a href="#wishlist" className="block hover:text-primary">Wishlist</a>
+              <a href="/myaccount" className="block hover:text-primary">My Account</a>
+              <a href="/login" className="block hover:text-primary">Login / Register</a>
+              <a href="/addToCart" className="block hover:text-primary">Cart</a>
+              <a href="/wishlist" className="block hover:text-primary">Wishlist</a>
               <a href="#shop" className="block hover:text-primary">Shop</a>
             </nav>
           </div>
@@ -44,13 +44,13 @@ export default function Footer() {
               <a href="#privacy" className="block hover:text-primary">Privacy Policy</a>
               <a href="#terms" className="block hover:text-primary">Terms Of Use</a>
               <a href="#faq" className="block hover:text-primary">FAQ</a>
-              <a href="#contact" className="block hover:text-primary">Contact</a>
+              <a href="/contact" className="block hover:text-primary">Contact</a>
             </nav>
           </div>
         </div>
 
         <div className="text-center pt-8 border-t border-gray-800">
-          <p>© Copyright Rimel 2022. All right reserved</p>
+          <p>© Copyright Abhishek & Ayush 2025. All right reserved</p>
         </div>
       </div>
     </footer>

@@ -1,10 +1,12 @@
-import { FiHeart, FiShoppingCart, FiUser, FiSearch, FiLogOut } from "react-icons/fi";
+
+import { FiHeart, FiShoppingCart, FiUser, FiSearch, FiLogOut, FiMenu } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 
 export default function MainHeader() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -76,16 +78,22 @@ export default function MainHeader() {
     },
   ]
 
+
   return (
-    <header className="flex flex-col bg-white shadow-md">
-      <div className="flex justify-between items-center px-8 py-4 border-b border-gray-300 bg-gray-50 relative z-50">
+    <header className="bg-white shadow-md">
+      <div className="flex justify-between items-center px-6 py-4 border-b border-gray-300 bg-gray-50 relative">
+        {/* Mobile Menu Button */}
+        <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <FiMenu className="text-2xl" />
+        </button>
+
         {/* Logo */}
         <Link to="/home" className="text-2xl font-bold text-gray-900">
           Exclusive
         </Link>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="relative w-[600px]">
+        <form onSubmit={handleSearch} className="hidden lg:flex relative w-[600px]">
           <input
             type="text"
             placeholder="What are you looking for?"
@@ -98,31 +106,24 @@ export default function MainHeader() {
           </button>
         </form>
 
-        {/* Navigation Links & Icons */}
+        {/* Icons */}
         <div className="flex items-center gap-6 text-xl">
-          <Link to="/wishlist">
-            <FiHeart className="cursor-pointer hover:text-primary" />
-          </Link>
-          <Link to="/addToCart">
-            <FiShoppingCart className="cursor-pointer hover:text-primary" />
-          </Link>
+          <Link to="/wishlist"><FiHeart className="cursor-pointer hover:text-primary" /></Link>
+          <Link to="/addToCart"><FiShoppingCart className="cursor-pointer hover:text-primary" /></Link>
 
           {/* User Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setIsDropdownVisible(true)}
-            onMouseLeave={(e) => {
-              if (!dropdownRef.current.contains(e.relatedTarget)) {
-                setIsDropdownVisible(false);
-              }
-            }}
+            onMouseLeave={() => setIsDropdownVisible(false)}
+            onMouseDown={(e) => e.preventDefault()}
           >
             <FiUser className="cursor-pointer hover:text-primary" />
             <div
               ref={dropdownRef}
-              className={`absolute right-0 w-56 px-2 py-4 bg-zinc-50 shadow-lg text-sm transition-opacity duration-100 ${isDropdownVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-              onMouseEnter={() => setIsDropdownVisible(true)}
-              onMouseLeave={() => setIsDropdownVisible(false)}
+              className={`absolute right-0 w-56 px-2 py-4 bg-zinc-50 shadow-lg text-sm transition-opacity duration-100 z-50 ${
+                isDropdownVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
+              }`}
             >
               <Link to="/myaccount" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Account</Link>
               <Link to="/wishlist" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Wishlist</Link>
@@ -130,10 +131,7 @@ export default function MainHeader() {
               <Link to="/addproduct" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Product</Link>
               <Link to="/contact" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contact</Link>
               <Link to="/about" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About</Link>
-              <button
-                onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200"
-              >
+              <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200">
                 <FiLogOut className="inline mr-2" /> Sign Out
               </button>
             </div>
@@ -141,21 +139,48 @@ export default function MainHeader() {
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="flex justify-center py-2 bg-zinc-100">
-        <nav className="">
+      {/* Mobile Search Bar */}
+      <div className="lg:hidden px-4 py-2">
+        <form onSubmit={handleSearch} className="flex relative w-full">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded"
+          />
+          <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900">
+            <FiSearch className="cursor-pointer hover:text-primary" />
+          </button>
+        </form>
+      </div>
 
-          <div className="flex items-center gap-6 px-8 text-gray-700 text-sm">
-            {productType.map((cat, index) => (
-              <Link key={index} to={`/productType/${cat.name}`} className="flex items-center justify-center flex-col hover:text-primary">
-                <img src={cat.image} className="w-18 h-18 mb-2" alt={cat.name} />
-                <span className="flex justify-center text-center">{cat.name}</span>
-              </Link>
-            ))}
-
-          </div>
+      {/* Categories - Scrollable on Mobile */}
+      <div className="overflow-x-auto whitespace-nowrap py-2 bg-zinc-100">
+        <nav className="flex gap-6 px-4 lg:justify-center">
+          {productType.map((cat, index) => (
+            <Link key={index} to={`/productType/${cat.name}`} className="flex flex-col items-center text-sm hover:text-primary">
+              <img src={cat.image} className="w-16 h-16 mb-1 object-cover" alt={cat.name} />
+              <span className="text-center w-20 truncate">{cat.name}</span>
+            </Link>
+          ))}
         </nav>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white shadow-md p-4">
+          <Link to="/myaccount" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Account</Link>
+          <Link to="/wishlist" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Wishlist</Link>
+          <Link to="/addToCart" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Order</Link>
+          <Link to="/addproduct" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Product</Link>
+          <Link to="/contact" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contact</Link>
+          <Link to="/about" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About</Link>
+          <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200">
+            <FiLogOut className="inline mr-2" /> Sign Out
+          </button>
+        </div>
+      )}
     </header>
   );
 }
