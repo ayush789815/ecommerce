@@ -25,7 +25,7 @@ const SearchPage = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_URL}/searchProducts?q=${searchTerm}`
+          `${import.meta.env.VITE_URL}/api/searchProducts?q=${searchTerm}`
         );
 
         setProducts(response.data.products);

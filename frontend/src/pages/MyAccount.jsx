@@ -25,7 +25,7 @@ const ProfilePageAlt = () => {
   
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get(`${import.meta.env.VITE_URL}/auth/getprofile`, {
+    axios.get(`${import.meta.env.VITE_URL}/api/auth/getprofile`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((res) => {
@@ -49,7 +49,7 @@ const ProfilePageAlt = () => {
     e.preventDefault();
     const token = localStorage.getItem('token')
     try {
-      const response = await axios.put(`${import.meta.env.VITE_URL}/auth/updateprofile`, formData, {
+      const response = await axios.put(`${import.meta.env.VITE_URL}/api/auth/updateprofile`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
       console.log('Profile updated successfully:', response.data);

@@ -19,7 +19,7 @@ export default function HomePage() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_URL}/getProduct?page=${currentPage}`
+          `${import.meta.env.VITE_URL}/api/getProduct?page=${currentPage}`
         );        setProduct(response.data.products);
         setTotalPages(response.data.totalPages);
 
@@ -30,7 +30,7 @@ export default function HomePage() {
 
     const fetchBestSellingProducts = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_URL}/bestSelling`);
+        const response = await axios.get(`${import.meta.env.VITE_URL}/api/bestSelling`);
         setBestSelling(response.data.products);
       } catch (error) {
         console.error("Error fetching best-selling products:", error);

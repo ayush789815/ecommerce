@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_URL}/wishlist/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_URL}/api/wishlist/${userId}`);
         const wishlist = response.data;
         if (wishlist && wishlist.products) {
           const productExists = wishlist.products.some(p => p.productId && p.productId._id === product._id);
@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
 
   const addToWishlist = async (productId) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_URL}/wishlist`, {
+      const response = await axios.post(`${import.meta.env.VITE_URL}/api/wishlist`, {
         userId,
         productId
       });
@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
 
   const removeFromWishlist = async (productId) => {
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_URL}/wishlist`, {
+      const response = await axios.delete(`${import.meta.env.VITE_URL}/api/wishlist`, {
         data: { userId, productId }
       });
       console.log("Product Removed from Wishlist:", response.data);

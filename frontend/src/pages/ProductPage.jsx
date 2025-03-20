@@ -21,7 +21,7 @@ function ProductPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_URL}/getProduct/${productId}`);
+                const response = await axios.get(`${import.meta.env.VITE_URL}/api/getProduct/${productId}`);
                 setProduct(response.data.product);
             } catch (error) {
                 console.error('Error fetching product:', error);
@@ -30,7 +30,7 @@ function ProductPage() {
 
         const fetchWishlist = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_URL}/wishlist/${userId}`);
+                const response = await axios.get(`${import.meta.env.VITE_URL}/api/wishlist/${userId}`);
                 const wishlist = response.data;
                 const productExists = wishlist.products.some(p => p.productId && p.productId._id === productId);
                 setIsInWishlist(productExists);

@@ -13,7 +13,7 @@ function Login() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`${import.meta.env.VITE_URL}/auth/login`,formData )
+    const response = await axios.post(`${import.meta.env.VITE_URL}/api/auth/login`,formData )
     // localStorage.setItem('userId', response.data.userId);
     // console.log(response);
     

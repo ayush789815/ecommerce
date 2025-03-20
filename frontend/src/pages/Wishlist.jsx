@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
 import axios from 'axios';
@@ -10,9 +10,10 @@ function Wishlist() {
     const [wishlist, setWishlist] = useState(null);
     const userId = localStorage.getItem('userId');
 
+    // ✅ Fetch Wishlist
     const getWishlist = async (userId) => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_URL}/wishlist/${userId}`);
+            const response = await axios.get(`${import.meta.env.VITE_URL}/api/wishlist/${userId}`);
             setWishlist(response.data);
         } catch (error) {
             console.error('Error fetching wishlist:', error);
@@ -26,13 +27,14 @@ function Wishlist() {
         }
     }, [userId]);
 
+    // ✅ Remove Product from Wishlist
     const removeFromWishlist = async (productId) => {
         try {
-            const response = await axios.delete(`${import.meta.env.VITE_URL}/wishlist`, {
+            await axios.delete(`${import.meta.env.VITE_URL}/api/wishlist`, {
                 data: { userId, productId }
             });
             toast.success('Product removed from wishlist');
-            getWishlist(userId); // Refresh the wishlist
+            getWishlist(userId);
         } catch (error) {
             console.error("Error removing product from wishlist:", error);
             toast.error('Error removing product from wishlist');
@@ -42,7 +44,7 @@ function Wishlist() {
     // ✅ Show Spinner While Loading
     if (wishlist === null) {
         return (
-            <div className="flex justify-center items-center py-8">
+            <div className="flex justify-center items-center min-h-screen">
                 <Spinner size="lg" color="blue" />
             </div>
         );
@@ -54,15 +56,17 @@ function Wishlist() {
 
             {/* Wishlist Content */}
             <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="flex gap-8">
-                    <div className="flex-1">
+                <div className="flex flex-wrap justify-center">
+                    <div className="w-full lg:w-3/4">
                         <div className="bg-white rounded-lg shadow p-6">
-                            <div className="grid grid-cols-5 gap-6 mb-4 pb-4 border-b">
+                            {/* Table Header */}
+                            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-4 pb-4 border-b text-sm md:text-base font-semibold">
                                 <div className="col-span-2">Product</div>
-                                <div>Price</div>
-                                <div>Actions</div>
+                                <div className="hidden md:block">Price</div>
+                                <div className="text-center">Remove</div>
                             </div>
 
+                            {/* Empty Wishlist Message */}
                             {wishlist?.products?.length === 0 ? (
                                 <div className="text-center text-gray-500 text-xl py-10">
                                     No products in wishlist 😔
@@ -70,14 +74,23 @@ function Wishlist() {
                             ) : (
                                 wishlist.products.map(product => (
                                     product.productId && (
-                                        <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
+                                        <div key={product.productId._id} className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
+                                            
+                                            {/* Product Info */}
                                             <div className="col-span-2 flex items-center space-x-4">
-                                                <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
-                                                <span>{product.productId.productName}</span>
+                                                <img src={product.productId.image} alt={product.productId.productName} className="w-16 h-16 md:w-20 md:h-20 object-cover rounded" />
+                                                <span className="text-sm md:text-base">{product.productId.productName}</span>
                                             </div>
-                                            <div>${product.productId.price}</div>
-                                            <div>
-                                                <button className="text-gray-400 hover:text-gray-600" onClick={() => removeFromWishlist(product.productId._id)}>
+
+                                            {/* Price */}
+                                            <div className="hidden md:block">${product.productId.price}</div>
+
+                                            {/* Remove Button (Always Visible) */}
+                                            <div className="flex justify-center">
+                                                <button 
+                                                    className="text-gray-400 hover:text-gray-600 p-2 rounded-full transition-all duration-200" 
+                                                    onClick={() => removeFromWishlist(product.productId._id)}
+                                                >
                                                     <X className="w-5 h-5" />
                                                 </button>
                                             </div>
@@ -89,6 +102,7 @@ function Wishlist() {
                     </div>
                 </div>
             </div>
+
             <Footer />
         </div>
     );

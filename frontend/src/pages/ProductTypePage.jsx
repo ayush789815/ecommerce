@@ -20,7 +20,7 @@ const ProductTypePage = () => {
       setErrorMessage("");
     const fetchProducts = async () => {
       try {
-        let response = await axios.get(`${import.meta.env.VITE_URL}/products/productType/${productType}`);
+        let response = await axios.get(`${import.meta.env.VITE_URL}/api/products/productType/${productType}`);
         if (response.data.products.length === 0) {
             setErrorMessage("No products available for this category.");
           }

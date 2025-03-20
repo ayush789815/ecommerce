@@ -4,11 +4,7 @@ import Header from '../component/Header/Header';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import { Spinner } from "../components/ui/spinner";
-import { toast } from 'react-toastify';
->>>>>>> 31915f869b04388bfb8bcf16de04042dea57fcb0
 
 function AddToCart() {
     const [quantities, setQuantities] = useState({});
@@ -18,7 +14,7 @@ function AddToCart() {
     // ✅ Fetch Cart Items
     const getCart = async (userId) => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_URL}/getCart/${userId}`);
+            const response = await axios.get(`${import.meta.env.VITE_URL}/api/getCart/${userId}`);
             setCart(response.data);
         } catch (error) {
             console.error('Error fetching cart:', error);
@@ -41,7 +37,7 @@ function AddToCart() {
         }));
 
         try {
-            const response = await axios.put(`${import.meta.env.VITE_URL}/updateCart`, {
+            await axios.put(`${import.meta.env.VITE_URL}/api/updateCart`, {
                 userId,
                 productId,
                 quantity: newQuantity
@@ -54,15 +50,13 @@ function AddToCart() {
         }
     };
 
-    // ✅ Remove Product from Cart (Without Refresh)
+    // ✅ Remove Product from Cart
     const removeProduct = async (productId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_URL}/removeFromCart`, {
+            await axios.delete(`${import.meta.env.VITE_URL}/api/removeFromCart`, {
                 data: { userId, productId }
             });
             toast.success('Product removed from cart');
-
-            // ✅ Manually remove product from cart state
             setCart(prevCart => ({
                 ...prevCart,
                 products: prevCart.products.filter(product => product.productId._id !== productId)
@@ -95,41 +89,41 @@ function AddToCart() {
 
             {/* Cart Content */}
             <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="flex gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     {/* Cart Items */}
-                    <div className="flex-1">
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <div className="grid grid-cols-5 gap-6 mb-4 pb-4 border-b">
+                    <div className="md:col-span-2 lg:col-span-3">
+                        <div className="bg-white rounded-lg shadow p-4 sm:p-6 overflow-x-auto">
+                            <div className="grid grid-cols-4 sm:grid-cols-5 gap-4 text-sm font-semibold pb-4 border-b">
                                 <div className="col-span-2">Product</div>
-                                <div>Price</div>
+                                <div className="hidden sm:block">Price</div>
                                 <div>Quantity</div>
                                 <div>Subtotal</div>
                             </div>
 
                             {/* ✅ Show Message if No Products in Cart */}
                             {cart.products.length === 0 ? (
-                                <div className="text-center text-gray-500 text-xl py-10">
+                                <div className="text-center text-gray-500 text-lg py-10">
                                     Your cart is empty 🛒
                                 </div>
                             ) : (
                                 cart.products.map(product => (
                                     product.productId && (
-                                        <div key={product.productId._id} className="grid grid-cols-5 gap-6 items-center mb-6 pb-6 border-b">
+                                        <div key={product.productId._id} className="grid grid-cols-4 sm:grid-cols-5 gap-4 items-center py-4 border-b text-sm">
                                             <div className="col-span-2 flex items-center space-x-4">
                                                 <button className="text-gray-400 hover:text-gray-600" onClick={() => removeProduct(product.productId._id)}>
                                                     <X className="w-5 h-5" />
                                                 </button>
-                                                <img src={product.productId.image} alt={product.productId.productName} className="w-20 h-20 object-cover rounded" />
-                                                <span>{product.productId.productName}</span>
+                                                <img src={product.productId.image} alt={product.productId.productName} className="w-16 h-16 object-cover rounded" />
+                                                <span className="truncate w-28 sm:w-auto">{product.productId.productName}</span>
                                             </div>
-                                            <div>${product.productId.price}</div>
+                                            <div className="hidden sm:block">${product.productId.price}</div>
                                             <div>
                                                 <input
                                                     type="number"
                                                     min="1"
                                                     value={quantities[product.productId._id] || product.quantity}
                                                     onChange={(e) => updateQuantity(product.productId._id, parseInt(e.target.value) || 1)}
-                                                    className="w-16 border rounded px-2 py-1"
+                                                    className="w-14 sm:w-16 border rounded px-2 py-1 text-center"
                                                 />
                                             </div>
                                             <div>${product.productId.price * product.quantity}</div>
@@ -139,11 +133,11 @@ function AddToCart() {
                             )}
                         </div>
 
-                        <div className="mt-6 flex justify-between">
-                            <Link to={'/home'} className='px-6 py-2 border border-gray-300 rounded hover:bg-gray-50'>
+                        <div className="mt-6 flex flex-col sm:flex-row justify-between gap-4">
+                            <Link to={'/home'} className='px-4 py-2 border border-gray-300 rounded text-center hover:bg-gray-50'>
                                 Return To Shop
                             </Link>
-                            <button className="px-6 py-2 border border-gray-300 rounded hover:bg-gray-50">
+                            <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50">
                                 Update Cart
                             </button>
                         </div>
@@ -151,11 +145,11 @@ function AddToCart() {
 
                     {/* Cart Total */}
                     {cart.products.length > 0 && (
-                        <div className="w-96">
-                            <div className="bg-white rounded-lg shadow p-6">
+                        <div className="w-full md:w-80 lg:w-96">
+                            <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                                 <h2 className="text-lg font-semibold mb-4">Cart Total</h2>
 
-                                <div className="space-y-3 mb-6">
+                                <div className="space-y-3 mb-6 text-sm">
                                     <div className="flex justify-between pb-3 border-b">
                                         <span>Subtotal:</span>
                                         <span>${calculateTotal()}</span>
@@ -180,9 +174,9 @@ function AddToCart() {
                                     <input
                                         type="text"
                                         placeholder="Coupon Code"
-                                        className="flex-1 border rounded-l px-4 py-2"
+                                        className="flex-1 border rounded-l px-3 py-2 text-sm"
                                     />
-                                    <button className="bg-red-500 text-white px-6 py-2 rounded-r hover:bg-red-600 transition-colors">
+                                    <button className="bg-red-500 text-white px-4 py-2 rounded-r hover:bg-red-600 transition-colors">
                                         Apply Coupon
                                     </button>
                                 </div>

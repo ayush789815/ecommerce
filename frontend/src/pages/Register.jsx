@@ -14,7 +14,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-   const response = await axios.post(`${import.meta.env.VITE_URL}/auth/register`,formData )
+   const response = await axios.post(`${import.meta.env.VITE_URL}/api/auth/register`,formData )
    if (response.status === 201) {
           const data = response.data;
           navigate('/home')

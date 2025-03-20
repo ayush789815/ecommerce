@@ -13,7 +13,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let response = await axios.get(`${import.meta.env.VITE_URL}/products/category/${category}`);
+        let response = await axios.get(`${import.meta.env.VITE_URL}/api/products/category/${category}`);
         console.log('Response:', response);
         setProducts(response?.data?.products || []); // Ensure empty array in case of error
         setLoading(false);

@@ -32,19 +32,11 @@ export default function Footer() {
           <div>
             <h3 className="font-bold mb-4">Account</h3>
             <nav className="space-y-2">
-<<<<<<< HEAD
-              <Link to={'/myaccount'} className="block hover:text-primary">My Account</Link>
-              <Link to={'/login'} className="block hover:text-primary">Login / Register</Link>
-              <Link to={'/addToCart'} className="block hover:text-primary">Cart</Link>
-              <Link to={'/wishlist'} className="block hover:text-primary">Wishlist</Link>
-              <Link to={'/home'} className="block hover:text-primary">Shop</Link>
-=======
               <a href="/myaccount" className="block hover:text-primary">My Account</a>
               <a href="/login" className="block hover:text-primary">Login / Register</a>
               <a href="/addToCart" className="block hover:text-primary">Cart</a>
               <a href="/wishlist" className="block hover:text-primary">Wishlist</a>
               <a href="#shop" className="block hover:text-primary">Shop</a>
->>>>>>> 5150875f4bfb2671a12b784ff70f430e71dfd30d
             </nav>
           </div>
 
@@ -54,11 +46,7 @@ export default function Footer() {
               <a href="#privacy" className="block hover:text-primary">Privacy Policy</a>
               <a href="#terms" className="block hover:text-primary">Terms Of Use</a>
               <a href="#faq" className="block hover:text-primary">FAQ</a>
-<<<<<<< HEAD
-              <Link to={'/contact'} className="block hover:text-primary">Contact</Link>
-=======
               <a href="/contact" className="block hover:text-primary">Contact</a>
->>>>>>> 5150875f4bfb2671a12b784ff70f430e71dfd30d
             </nav>
           </div>
         </div>
