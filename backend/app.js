@@ -15,6 +15,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true })); // Increase URL 
 
 connectDB()
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', message: 'Server is running' });
+});
+
 app.use('/api', authRoute)
 app.use('/api', productRoute)
 app.use("/api", wishlistRoute)

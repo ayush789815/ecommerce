@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import Header from '../component/Header/Header';
-import axios from "axios";
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { Spinner } from "../components/ui/spinner";
+import { getCart as getCartApi, updateCart, removeFromCart } from '../axios/axios';
 
 function AddToCart() {
     const [quantities, setQuantities] = useState({});
@@ -12,10 +12,10 @@ function AddToCart() {
     const userId = localStorage.getItem('userId');
 
     // ✅ Fetch Cart Items
-    const getCart = async (userId) => {
+    const fetchCart = async (userId) => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_URL}/api/getCart/${userId}`);
-            setCart(response.data);
+            const data = await getCartApi(userId);
+            setCart(data);
         } catch (error) {
             console.error('Error fetching cart:', error);
             toast.error('Error fetching cart');
@@ -24,7 +24,7 @@ function AddToCart() {
 
     useEffect(() => {
         if (userId) {
-            getCart(userId);
+            fetchCart(userId);
         }
     }, [userId]);
 
@@ -37,13 +37,9 @@ function AddToCart() {
         }));
 
         try {
-            await axios.put(`${import.meta.env.VITE_URL}/api/updateCart`, {
-                userId,
-                productId,
-                quantity: newQuantity
-            });
+            await updateCart(userId, productId, newQuantity);
             toast.success('Cart updated successfully');
-            getCart(userId);
+            fetchCart(userId);
         } catch (error) {
             console.error("Error updating cart:", error);
             toast.error('Error updating cart');
@@ -53,9 +49,7 @@ function AddToCart() {
     // ✅ Remove Product from Cart
     const removeProduct = async (productId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_URL}/api/removeFromCart`, {
-                data: { userId, productId }
-            });
+            await removeFromCart(userId, productId);
             toast.success('Product removed from cart');
             setCart(prevCart => ({
                 ...prevCart,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { loginUser } from '../axios/axios';
 import LoginImage from '../assets/Tablet login-pana.png'; 
 
 function Login() {
@@ -13,16 +13,14 @@ function Login() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(`${import.meta.env.VITE_URL}/api/auth/login`,formData )
-    // localStorage.setItem('userId', response.data.userId);
-    // console.log(response);
-    
-    if (response.status === 200) {
-      const data = response.data;
-      // console.log(data.token,data.userId,"from line no 11")
+    try {
+      const data = await loginUser(formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
-      navigate('/home')
+      navigate('/home');
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Add error handling here (e.g., display error message)
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { registerUser } from '../axios/axios';
 import RegisterImage from "../assets/Sign up-pana.png"
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -13,13 +13,13 @@ function SignUp() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-   const response = await axios.post(`${import.meta.env.VITE_URL}/api/auth/register`,formData )
-   if (response.status === 201) {
-          const data = response.data;
-          navigate('/home')
-        }
-
+    try {
+      const data = await registerUser(formData);
+      navigate('/home');
+    } catch (error) {
+      console.error('Registration failed:', error);
+      // Add error handling here (e.g., display error message)
+    }
   };
 //   const submitHandler = async (e) => {
 //     e.preventDefault()

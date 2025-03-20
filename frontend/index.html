@@ -3,12 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="description" content="E-commerce store with a wide range of products" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>E-Commerce Store</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ecommerce-feqf.onrender.com">
+    
+    <!-- Preload main script -->
+    <link rel="modulepreload" href="/src/main.jsx" />
+    
+    <!-- DNS prefetch for external services -->
+    <link rel="dns-prefetch" href="https://checkout.razorpay.com">
+    
+    <!-- Async load Razorpay -->
+    <script defer src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <!-- Cache control for static assets -->
+    <meta http-equiv="Cache-Control" content="max-age=31536000" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <!-- Add noscript fallback -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center;">
+        <h1>JavaScript Required</h1>
+        <p>This website requires JavaScript to function properly. Please enable JavaScript to continue.</p>
+      </div>
+    </noscript>
   </body>
 </html>

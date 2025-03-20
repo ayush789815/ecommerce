@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from "react-icons/fa";
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
-import { addToCart } from '../axios/axios';
+import { addToCart, getProduct, getWishlist, addToWishlist as addToWishlistApi, removeFromWishlist as removeFromWishlistApi } from '../axios/axios';
 import Order from '../component/OrderButton/Order.jsx'
 
 function ProductPage() {
@@ -21,8 +20,8 @@ function ProductPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_URL}/api/getProduct/${productId}`);
-                setProduct(response.data.product);
+                const response = await getProduct(productId);
+                setProduct(response.product);
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
@@ -30,8 +29,7 @@ function ProductPage() {
 
         const fetchWishlist = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_URL}/api/wishlist/${userId}`);
-                const wishlist = response.data;
+                const wishlist = await getWishlist(userId);
                 const productExists = wishlist.products.some(p => p.productId && p.productId._id === productId);
                 setIsInWishlist(productExists);
             } catch (error) {
@@ -61,12 +59,7 @@ function ProductPage() {
 
     const addToWishlist = async (productId) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_URL}/wishlist`, {
-                userId,
-                productId
-            });
-
-            console.log("Product Added to Wishlist:", response.data);
+            await addToWishlistApi(userId, productId);
             setIsInWishlist(true);
             toast.success("Product added to wishlist");
         } catch (error) {
@@ -77,10 +70,7 @@ function ProductPage() {
 
     const removeFromWishlist = async (productId) => {
         try {
-            const response = await axios.delete(`${import.meta.env.VITE_URL}/wishlist`, {
-                data: { userId, productId }
-            });
-            console.log("Product Removed from Wishlist:", response.data);
+            await removeFromWishlistApi(userId, productId);
             setIsInWishlist(false);
             toast.success("Product removed from wishlist");
         } catch (error) {

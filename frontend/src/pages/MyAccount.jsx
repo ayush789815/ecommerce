@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Edit2, User, Mail, Phone, MapPin, Camera, ArrowLeft } from 'lucide-react';
-import axios from 'axios'
+import { getUserProfile, updateUserProfile } from '../axios/axios';
 import {useNavigate} from 'react-router-dom'
 
 const ProfilePageAlt = () => {
@@ -24,19 +24,19 @@ const ProfilePageAlt = () => {
   const navigate = useNavigate()
   
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    axios.get(`${import.meta.env.VITE_URL}/api/auth/getprofile`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then((res) => {
-      console.log("API Response:", res.data.user);
-      if (res.data && res.data.user) {
-        setUserData(res.data.user);
+    const fetchProfile = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        const user = await getUserProfile(userId);
+        if (user) {
+          setUserData(user);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
       }
-    })
-    .catch((err) => {
-      console.error("Error fetching profile:", err);
-    });
+    };
+    
+    fetchProfile();
   }, []);
   
   // Sync formData with userData
@@ -47,12 +47,9 @@ const ProfilePageAlt = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token')
     try {
-      const response = await axios.put(`${import.meta.env.VITE_URL}/api/auth/updateprofile`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      console.log('Profile updated successfully:', response.data);
+      const userId = localStorage.getItem('userId');
+      await updateUserProfile(userId, formData);
       setUserData({...formData});
       setIsEditing(false);
     } catch(err) {

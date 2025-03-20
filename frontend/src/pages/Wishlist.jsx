@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Spinner } from "../components/ui/spinner";
+import { getWishlist as getWishlistApi, removeFromWishlist as removeFromWishlistApi } from '../axios/axios';
 
 function Wishlist() {
     const [wishlist, setWishlist] = useState(null);
     const userId = localStorage.getItem('userId');
 
     // ✅ Fetch Wishlist
-    const getWishlist = async (userId) => {
+    const fetchWishlist = async (userId) => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_URL}/api/wishlist/${userId}`);
-            setWishlist(response.data);
+            const data = await getWishlistApi(userId);
+            setWishlist(data);
         } catch (error) {
             console.error('Error fetching wishlist:', error);
             toast.error('Error fetching wishlist');
@@ -23,18 +23,16 @@ function Wishlist() {
 
     useEffect(() => {
         if (userId) {
-            getWishlist(userId);
+            fetchWishlist(userId);
         }
     }, [userId]);
 
     // ✅ Remove Product from Wishlist
     const removeFromWishlist = async (productId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_URL}/api/wishlist`, {
-                data: { userId, productId }
-            });
+            await removeFromWishlistApi(userId, productId);
             toast.success('Product removed from wishlist');
-            getWishlist(userId);
+            fetchWishlist(userId);
         } catch (error) {
             console.error("Error removing product from wishlist:", error);
             toast.error('Error removing product from wishlist');
