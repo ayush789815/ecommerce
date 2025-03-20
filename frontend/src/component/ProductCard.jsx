@@ -98,8 +98,11 @@ const ProductCard = memo(({ product }) => {
           className="absolute top-2 right-2 bg-white p-2 rounded-full hover:bg-gray-100" >
           {isInWishlist ? <FaHeart className="text-red-500" /> : <FiHeart />}
         </button>
-        <Link className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gray-500 text-white px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-          to={`/product/${product._id}`}> Quick View
+        <Link 
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gray-500 text-white px-4 py-2 rounded opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+          to={`/product/${product._id}`}
+        > 
+          Quick View
         </Link>
       </div>
 

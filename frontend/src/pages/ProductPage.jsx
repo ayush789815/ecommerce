@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Header from '../component/Header/Header';
 import Footer from '../component/Footer';
 import { addToCart, getProduct, getWishlist, addToWishlist as addToWishlistApi, removeFromWishlist as removeFromWishlistApi } from '../axios/axios';
-import Order from '../component/OrderButton/Order.jsx'
+import Order from '../component/OrderButton/Order.jsx';
 
 function ProductPage() {
     const { productId } = useParams();
@@ -14,8 +14,8 @@ function ProductPage() {
     const [selectedImage, setSelectedImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [selectedColor, setSelectedColor] = useState('white');
-    const userId = localStorage.getItem('userId'); // Get user ID from local storage
-    const [isInWishlist, setIsInWishlist] = useState(false); // State to track if the product is in the wishlist
+    const userId = localStorage.getItem('userId');
+    const [isInWishlist, setIsInWishlist] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -91,13 +91,14 @@ function ProductPage() {
         <>
             <Header />
             <div className="max-w-7xl mx-auto py-8 px-4">
-                <div className="flex gap-8">
-                    <div className="w-1/2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Product Image Section */}
+                    <div className="w-full">
                         <div className="mb-4">
                             <img
                                 src={images[selectedImage]}
                                 alt="Product"
-                                className="w-full h-96 object-center object-cover rounded-lg"
+                                className="w-full min-h-auto  h-96 object-center object-cover rounded-lg"
                             />
                         </div>
                         <div className="grid grid-cols-4 gap-4">
@@ -112,7 +113,9 @@ function ProductPage() {
                             ))}
                         </div>
                     </div>
-                    <div className="w-1/2">
+
+                    {/* Product Details Section */}
+                    <div className="w-full">
                         <h1 className="text-3xl font-bold mb-4">{product.productName}</h1>
                         <div className="flex flex-col mb-4">
                             <div className="flex text-yellow-400">
@@ -125,6 +128,8 @@ function ProductPage() {
                         <p className="text-gray-600 mb-6">
                             {product.description}
                         </p>
+
+                        {/* Color Selection */}
                         <div className="mb-6">
                             <h3 className="font-semibold mb-2">Colors:</h3>
                             <div className="flex space-x-2">
@@ -138,6 +143,8 @@ function ProductPage() {
                                 />
                             </div>
                         </div>
+
+                        {/* Wishlist and Order Button */}
                         <div className="flex items-center space-x-4 mb-6">
                             <button
                                 onClick={handleWishlistToggle}
@@ -145,13 +152,10 @@ function ProductPage() {
                             >
                                 {isInWishlist ? <FaHeart className="text-red-500" /> : <FiHeart />}
                             </button>
-                            {/* <button className="bg-red-500 text-white px-8 py-2 rounded-lg hover:bg-red-600">
-                                Buy Now
-                            </button> */}
-                            <Order productId={product._id} amount={product.price} /> {/* Add Order component */}
-                        
+                            <Order productId={product._id} amount={product.price} />
                         </div>
 
+                        {/* Quantity and Add to Cart Button */}
                         <div className='pb-4 flex gap-4'>
                             <div className="flex items-center border rounded-lg">
                                 <button
@@ -172,6 +176,8 @@ function ProductPage() {
                                 Add To Cart
                             </button>
                         </div>
+
+                        {/* Free Delivery Section */}
                         <div className="border rounded-lg p-4">
                             <h3 className="font-semibold mb-4">Free Delivery</h3>
                             <p className="text-sm text-gray-600 mb-2">
