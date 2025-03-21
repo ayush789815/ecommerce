@@ -1,4 +1,3 @@
-
 import { FiHeart, FiShoppingCart, FiUser, FiSearch, FiLogOut, FiMenu } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
@@ -127,7 +126,8 @@ export default function MainHeader() {
             >
               <Link to="/myaccount" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Account</Link>
               <Link to="/wishlist" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Wishlist</Link>
-              <Link to="/addToCart" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Order</Link>
+              <Link to="/orders" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Orders</Link>
+              <Link to="/addToCart" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Cart</Link>
               <Link to="/addproduct" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Product</Link>
               <Link to="/contact" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contact</Link>
               <Link to="/about" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About</Link>
@@ -172,7 +172,8 @@ export default function MainHeader() {
         <div className="lg:hidden bg-white shadow-md p-4">
           <Link to="/myaccount" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Account</Link>
           <Link to="/wishlist" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Wishlist</Link>
-          <Link to="/addToCart" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Order</Link>
+          <Link to="/orders" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Orders</Link>
+          <Link to="/addToCart" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Cart</Link>
           <Link to="/addproduct" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Product</Link>
           <Link to="/contact" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Contact</Link>
           <Link to="/about" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">About</Link>

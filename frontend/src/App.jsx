@@ -19,6 +19,7 @@ const ProductTypePage = lazy(() => import('./pages/ProductTypePage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
 const MyAccount = lazy(() => import('./pages/MyAccount'));
+const Orders = lazy(() => import('./pages/Orders'));
 
 // Loading component
 const PageLoader = () => (
@@ -66,6 +67,11 @@ function App() {
           <Route path='/wishlist' element={
             <ProtectedRoute>
               <Wishlist />
+            </ProtectedRoute>
+          } />
+          <Route path='/orders' element={
+            <ProtectedRoute>
+              <Orders />
             </ProtectedRoute>
           } />
           <Route path='/payment-success' element={

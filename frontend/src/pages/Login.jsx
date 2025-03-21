@@ -3,24 +3,30 @@ import { Mail, Lock } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../axios/axios';
 import LoginImage from '../assets/Tablet login-pana.png'; 
+import { toast } from 'react-toastify';
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const data = await loginUser(formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
+      toast.success('Login successful!');
       navigate('/home');
     } catch (error) {
       console.error('Login failed:', error);
-      // Add error handling here (e.g., display error message)
+      toast.error(error?.response?.data?.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,9 +109,10 @@ function Login() {
             <div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-300"
               >
-                Sign in
+                {loading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
 
